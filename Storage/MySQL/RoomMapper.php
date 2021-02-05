@@ -35,4 +35,19 @@ final class RoomMapper extends AbstractMapper
             self::column('price')
         ];
     }
+
+    /**
+     * Fetch all available rooms
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->orderBy('id')
+                       ->desc();
+
+        return $db->queryAll();
+    }
 }

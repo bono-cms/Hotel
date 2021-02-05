@@ -13,4 +13,10 @@ namespace Hotel\Storage;
 
 interface RoomMapperInterface
 {
+    /**
+     * Fetch all available rooms
+     * 
+     * @return array
+     */
+    public function fetchAll();
 }
