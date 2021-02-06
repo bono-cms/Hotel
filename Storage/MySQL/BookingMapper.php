@@ -23,4 +23,19 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
     {
         return self::getWithPrefix('bono_module_hotel_rooms_booking');
     }
+
+    /**
+     * Fetch all booking entries
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->orderBy('id')
+                       ->desc();
+
+        return $db->queryAll();
+    }
 }

@@ -13,5 +13,10 @@ namespace Hotel\Storage;
 
 interface BookingMapperInterface
 {
-    
+    /**
+     * Fetch all booking entries
+     * 
+     * @return array
+     */
+    public function fetchAll();
 }
