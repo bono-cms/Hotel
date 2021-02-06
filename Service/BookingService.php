@@ -47,7 +47,8 @@ final class BookingService extends AbstractManager
                ->setClient($row['client'])
                ->setAmount($row['amount'])
                ->setCheckin($row['checkin'])
-               ->setCheckout($row['checkout']);
+               ->setCheckout($row['checkout'])
+               ->setStatus($row['status']);
 
         return $entity;
     }
