@@ -26,7 +26,7 @@ final class Room extends AbstractController
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()->addOne('Hotel');
 
-        return $this->view->render('index', [
+        return $this->view->render('room/index', [
             'rooms' => $this->getModuleService('roomService')->fetchAll()
         ]);
     }
@@ -44,7 +44,7 @@ final class Room extends AbstractController
         $this->view->getBreadcrumbBag()->addOne('Hotel', 'Hotel:Admin:Room@indexAction')
                                        ->addOne($title);
 
-        return $this->view->render('form', [
+        return $this->view->render('room/form', [
             'room' => $room
         ]);
     }
