@@ -70,7 +70,8 @@ final class Room extends AbstractController
         $room = $this->getModuleService('roomService')->fetchById($id, true);
 
         if ($room) {
-            return $this->createForm($room, 'Edit the room');
+            $name = $this->getCurrentProperty($room, 'name');
+            return $this->createForm($room, $this->translator->translate('Edit the room "%s"', $name));
         } else {
             return false;
         }
