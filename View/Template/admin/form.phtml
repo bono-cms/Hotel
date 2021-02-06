@@ -1,9 +1,45 @@
+<?php
+
+use Krystal\Form\Element;
+use Cms\Service\LanguageManager;
+
+defined('KRYSTAL') or die;
+
+?>
+
 <form class="card" data-group="room" autocomplete="off">
-    <?= $this->field()->hidden('room[id]', $room->getId()); ?>
-    <?= $this->field('Price per night')->number('room[price]', $room->getId(), ['class' => 'form-control']); ?>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item active"><a class="nav-link" href="#hotel-room-active" role="tab" data-toggle="tab"><i class="fas fa-hotel"></i> <?php $this->show('Room'); ?></a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="hotel-room-active" role="tabpanel">
+            <?php $this->loadPartial('language-tabs'); ?>
+
+            <div class="tab-content">
+                <?php foreach ($languages as $index => $language): ?>
+                <div class="tab-pane fade in <?php echo $index == 0 ? 'active show' : null; ?>" id="<?php printf('language-%s', $language->getId()); ?>" role="tabpanel">
+                    <?php $entity = LanguageManager::findByLangId($language->getId(), $room); ?>
+                    <?php $this->loadPartial('language-name', array('language' => $language)); ?>
+
+                    <?= $this->field()->hidden(sprintf('translation[%s][name]', $language->getId()), $entity->getId()); ?>
+                    <?= $this->field()->hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
+                    <?= $this->field('Name')->text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
+                    <?= $this->field('Description')->textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="hotel-room-configuration" role="tabpanel">
+            <?= $this->field()->hidden('room[id]', $entity->getId()); ?>
+            <?= $this->field('Price per night')->number('room[price]', $entity->getPrice(), ['class' => 'form-control']); ?>
+        </div>
+    </div>
 
     <?php $this->loadPartial('actions', [
-        'new' => !$room->getId(),
+        'new' => !$entity->getId(),
         'add' => 'Hotel:Admin:Room@addAction',
         'edit' => 'Hotel:Admin:Room@editAction',
         'save' => 'Hotel:Admin:Room@saveAction',

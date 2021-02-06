@@ -25,6 +25,14 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getTranslationTable()
+    {
+        return RoomTranslationMapper::getTableName();
+    }
+
+    /**
      * Returns shared columns
      * 
      * @return array
@@ -33,8 +41,23 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
     {
         return [
             self::column('id'),
-            self::column('price')
+            self::column('price'),
+            RoomTranslationMapper::column('lang_id'),
+            RoomTranslationMapper::column('name'),
+            RoomTranslationMapper::column('description')
         ];
+    }
+
+    /**
+     * Fetches room by its id
+     * 
+     * @param int $id Room id
+     * @param boolean $withTranslations Whether to fetch translations
+     * @return array
+     */
+    public function fetchById($id, $withTranslations)
+    {
+        return $this->findEntity($this->getColumns(), $id, $withTranslations);
     }
 
     /**
@@ -44,10 +67,12 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
      */
     public function fetchAll()
     {
-        $db = $this->db->select('*')
-                       ->from(self::getTableName())
-                       ->orderBy('id')
-                       ->desc();
+        $db = $this->createEntitySelect($this->getColumns())
+                    // Language ID constraint
+                   ->whereEquals(RoomTranslationMapper::column('lang_id'), $this->getLangId());
+
+        $db->orderBy(self::column('id'))
+           ->desc();
 
         return $db->queryAll();
     }

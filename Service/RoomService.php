@@ -42,7 +42,10 @@ final class RoomService extends AbstractManager
     {
         $entity = new VirtualEntity();
         $entity->setId($row['id'])
-               ->setPrice($row['price']);
+               ->setLangId($row['lang_id'])
+               ->setPrice($row['price'])
+               ->setName($row['name'])
+               ->setDescription($row['description']);
 
         return $entity;
     }
@@ -58,14 +61,19 @@ final class RoomService extends AbstractManager
     }
 
     /**
-     * Fetches a room by its id
+     * Fetches room by its id
      * 
      * @param int $id Room id
+     * @param boolean $withTranslations Whether to fetch translations
      * @return array
      */
-    public function findById($id)
+    public function fetchById($id, $withTranslations)
     {
-        return $this->prepareResult($this->roomMapper->findByPk($id));
+        if ($withTranslations == true) {
+            return $this->prepareResults($this->roomMapper->fetchById($id, true));
+        } else {
+            return $this->prepareResult($this->roomMapper->fetchById($id, false));
+        }
     }
 
     /**
@@ -86,7 +94,7 @@ final class RoomService extends AbstractManager
      */
     public function deleteById($id)
     {
-        return $this->roomMapper->deleteByPk($id);
+        return $this->roomMapper->deleteEntity($id);
     }
 
     /**
@@ -97,7 +105,6 @@ final class RoomService extends AbstractManager
      */
     public function save(array $input)
     {
-        $room = $input['room'];
-        return $this->roomMapper->persist($room);
+        return $this->roomMapper->saveEntity($input['room'], $input['translation']);
     }
 }

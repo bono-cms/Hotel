@@ -34,11 +34,11 @@ final class Room extends AbstractController
     /**
      * Renders a form
      * 
-     * @param \Krystal\Stdlib\VirtualEntity $room
+     * @param array|\Krystal\Stdlib\VirtualEntity $room
      * @param string $title Page title
      * @return string
      */
-    private function createForm(VirtualEntity $room, $title)
+    private function createForm($room, $title)
     {
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()->addOne('Hotel', 'Hotel:Admin:Room@indexAction')
@@ -67,7 +67,7 @@ final class Room extends AbstractController
      */
     public function editAction($id)
     {
-        $room = $this->getModuleService('roomService')->findById($id);
+        $room = $this->getModuleService('roomService')->fetchById($id, true);
 
         if ($room) {
             return $this->createForm($room, 'Edit the room');
@@ -102,7 +102,7 @@ final class Room extends AbstractController
         $isNew = empty($input['room']['id']);
         $roomService = $this->getModuleService('roomService');
 
-        if ($roomService->save($input)){
+        if ($roomService->save($input)) {
             // Flash message
             $this->flashBag->set('success', $isNew ? 'The room has been added successfully' : 'The room has been updated successfully');
 
