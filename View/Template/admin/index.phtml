@@ -9,6 +9,10 @@ use Cms\View\Icon;
     <div class="btn-group mr-2">
         <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Room@addAction'); ?>"><i class="fas fa-hotel"></i> <?php $this->show('Add new room'); ?></a>
     </div>
+
+    <div class="btn-group mr-2">
+        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Booking@indexAction'); ?>"><i class="fas fa-calendar-alt"></i> <?php $this->show('View all bookings'); ?></a>
+    </div>
 </div>
 
 <div class="card">
