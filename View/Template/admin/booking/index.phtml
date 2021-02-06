@@ -1,0 +1,72 @@
+<?php
+
+use Krystal\Widget\GridView\GridViewWidget;
+use Cms\View\Icon;
+
+?>
+
+<div class="btn-toolbar">
+    <div class="btn-group mr-2">
+        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Room@addAction'); ?>"><i class="fas fa-hotel"></i> <?php $this->show('New manual booking'); ?></a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <?= $this->widget(new GridViewWidget($bookings, [
+            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+            'columns' => [
+                [
+                    'column' => 'id',
+                    'label' => '#',
+                    'attributes' => [
+                        'class' => 'text-center text-muted'
+                    ]
+                ],
+
+                [
+                    'column' => 'client',
+                    'attributes' => [
+                        'class' => null
+                    ]
+                ],
+
+                [
+                    'column' => 'amount',
+                    'value' => function($row){
+                        return number_format($row['amount']) . ' USD ';
+                    }
+                ],
+
+                [
+                    'column' => 'datetime',
+                    'label' => 'Date and time'
+                ],
+
+                [
+                    'column' => 'checkin'
+                ],
+
+                [
+                    'column' => 'checkout'
+                ]
+            ],
+
+            'actions' => [
+                function($room){
+                    return Icon::edit(
+                        $this->url('Hotel:Admin:Booking@editAction', $room->getId()),
+                        $this->translate('Edit this booking entry')
+                    );
+                },
+
+                function($room){
+                    return Icon::remove(
+                        $this->url('Hotel:Admin:Booking@deleteAction', $room->getId()),
+                        $this->translate('Delete this booking entry')
+                    );
+                }
+            ]
+        ])); ?>
+    </div>
+</div>

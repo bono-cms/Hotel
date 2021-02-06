@@ -1,0 +1,15 @@
+<form class="card" data-group="booking" autocomplete="off">
+    <?= $this->field()->hidden('booking[id]', $booking->getId()); ?>
+    <?= $this->field('Client')->text('booking[client]', $booking->getClient(), ['class' => 'form-control']); ?>
+    <?= $this->field('Amount')->text('booking[amount]', $booking->getAmount(), ['class' => 'form-control']); ?>
+    <?= $this->field('Check-in')->text('booking[checkin]', $booking->getCheckin(), ['class' => 'form-control']); ?>
+    <?= $this->field('Check-out')->text('booking[checkout]', $booking->getCheckout(), ['class' => 'form-control']); ?>
+
+    <?php $this->loadPartial('actions', [
+        'new' => !$booking->getId(),
+        'add' => 'Hotel:Admin:Booking@addAction',
+        'edit' => 'Hotel:Admin:Booking@editAction',
+        'save' => 'Hotel:Admin:Booking@saveAction',
+        'cancel' => 'Hotel:Admin:Booking@indexAction'
+    ]); ?>
+</form>
