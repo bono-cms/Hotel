@@ -1,0 +1,52 @@
+<?php
+
+use Krystal\Widget\GridView\GridViewWidget;
+use Cms\View\Icon;
+
+?>
+
+<div class="btn-toolbar">
+    <div class="btn-group mr-2">
+        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Room@addAction'); ?>"><?php $this->show('Add new room'); ?></a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <?= $this->widget(new GridViewWidget($rooms, [
+            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+            'columns' => [
+                [
+                    'column' => 'id',
+                    'label' => '#',
+                    'attributes' => [
+                        'class' => 'text-center text-muted'
+                    ]
+                ],
+
+                [
+                    'column' => 'price',
+                    'value' => function($row){
+                        return number_format($row['price']);
+                    }
+                ]
+            ],
+
+            'actions' => [
+                function($room){
+                    return Icon::edit(
+                        $this->url('Hotel:Admin:Room@editAction', $room->getId()),
+                        $this->translate('Edit this room')
+                    );
+                },
+
+                function($room){
+                    return Icon::remove(
+                        $this->url('Hotel:Admin:Room@deleteAction', $room->getId()),
+                        $this->translate('Delete this room')
+                    );
+                }
+            ]
+        ])); ?>
+    </div>
+</div>
