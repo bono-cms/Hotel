@@ -25,6 +25,13 @@ use Cms\View\Icon;
                 ],
 
                 [
+                    'column' => 'name',
+                    'attributes' => [
+                        'class' => null
+                    ]
+                ],
+
+                [
                     'column' => 'price',
                     'value' => function($row){
                         return number_format($row['price']);
