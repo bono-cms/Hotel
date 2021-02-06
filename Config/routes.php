@@ -29,5 +29,26 @@ return [
 
     '/%s/module/hotel/save' => [
         'controller' => 'Admin:Room@saveAction'
+    ],
+
+    // Booking
+    '/%s/module/hotel/booking' => [
+        'controller' => 'Admin:Booking@indexAction'
+    ],
+
+    '/%s/module/hotel/booking/add' => [
+        'controller' => 'Admin:Booking@addAction'
+    ],
+
+    '/%s/module/hotel/booking/edit/(:var)' => [
+        'controller' => 'Admin:Booking@editAction'
+    ],
+
+    '/%s/module/hotel/booking/delete/(:var)' => [
+        'controller' => 'Admin:Booking@deleteAction'
+    ],
+
+    '/%s/module/hotel/booking/save' => [
+        'controller' => 'Admin:Booking@saveAction'
     ]
 ];
