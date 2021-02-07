@@ -44,6 +44,8 @@ final class RoomService extends AbstractManager
         $entity->setId($row['id'])
                ->setLangId($row['lang_id'])
                ->setPrice($row['price'])
+               ->setAdults($row['adults'])
+               ->setChildren($row['children'])
                ->setName($row['name'])
                ->setDescription($row['description']);
 
