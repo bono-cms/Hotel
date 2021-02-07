@@ -38,3 +38,14 @@ CREATE TABLE `bono_module_hotel_rooms_booking` (
     FOREIGN KEY (room_id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE
 
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+
+/* Gallery */
+DROP TABLE IF EXISTS `bono_module_hotel_rooms_gallery`;
+CREATE TABLE `bono_module_hotel_rooms_gallery` (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Image ID',
+    `room_id` INT NOT NULL COMMENT 'Attached room ID',
+    `order` INT NOT NULL COMMENT 'Sorting order',
+    `file` varchar(255) NOT NULL
+
+    FOREIGN KEY (room_id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
