@@ -14,6 +14,14 @@ namespace Hotel\Storage;
 interface BookingMapperInterface
 {
     /**
+     * Confirms booking by a token
+     * 
+     * @param string $token
+     * @return boolean Depending on success
+     */
+    public function confirmByToken($token);
+
+    /**
      * Fetch all booking entries
      * 
      * @return array

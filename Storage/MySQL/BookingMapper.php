@@ -13,6 +13,7 @@ namespace Hotel\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Hotel\Storage\BookingMapperInterface;
+use Hotel\Collection\BookingStatusCollection;
 
 final class BookingMapper extends AbstractMapper implements BookingMapperInterface
 {
@@ -22,6 +23,20 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
     public static function getTableName()
     {
         return self::getWithPrefix('bono_module_hotel_rooms_booking');
+    }
+
+    /**
+     * Confirms booking by a token
+     * 
+     * @param string $token
+     * @return boolean Depending on success
+     */
+    public function confirmByToken($token)
+    {
+        $db = $this->db->update(self::getTableName(), ['status' => BookingStatusCollection::STATUS_CONFIRMED])
+                       ->whereEquals('token', $token);
+
+        return (bool) $db->execute(true);
     }
 
     /**

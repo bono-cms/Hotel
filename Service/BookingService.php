@@ -100,6 +100,17 @@ final class BookingService extends AbstractManager
     }
 
     /**
+     * Confirms booking by a token
+     * 
+     * @param string $token
+     * @return boolean Depending on success
+     */
+    public function confirmByToken($token)
+    {
+        return $this->bookingMapper->confirmByToken($token);
+    }
+
+    /**
      * Persists a booking entry
      * 
      * @param array $input
