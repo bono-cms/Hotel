@@ -12,8 +12,9 @@
 namespace Hotel\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
+use Hotel\Storage\GalleryMapperInterface;
 
-final class GalleryMapper extends AbstractMapper
+final class GalleryMapper extends AbstractMapper implements GalleryMapperInterface
 {
     /**
      * {@inheritDoc}
