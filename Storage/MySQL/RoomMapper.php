@@ -42,6 +42,8 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
         return [
             self::column('id'),
             self::column('price'),
+            self::column('adults'),
+            self::column('children'),
             RoomTranslationMapper::column('lang_id'),
             RoomTranslationMapper::column('name'),
             RoomTranslationMapper::column('description')
