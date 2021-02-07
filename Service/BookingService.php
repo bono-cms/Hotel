@@ -12,9 +12,11 @@
 namespace Hotel\Service;
 
 use Hotel\Storage\BookingMapperInterface;
+use Hotel\Collection\BookingStatusCollection;
 use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Date\TimeHelper;
+use Krystal\Text\TextUtils;
 
 final class BookingService extends AbstractManager
 {
@@ -55,6 +57,17 @@ final class BookingService extends AbstractManager
     }
 
     /**
+     * Adds new booking entry
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function add(array $input)
+    {
+        return $this->save($input, BookingStatusCollection::STATUS_TEMPORARY);
+    }
+
+    /**
      * Deletes booking entry by its id
      * 
      * @param int $id
@@ -90,13 +103,16 @@ final class BookingService extends AbstractManager
      * Persists a booking entry
      * 
      * @param array $input
+     * @param int $status Status constant
      * @return boolean
      */
-    public function save(array $input)
+    public function save(array $input, $status = BookingStatusCollection::STATUS_CONFIRMED)
     {
         // Append date only for new records
         if (empty($input['id'])) {
             $input['date'] = TimeHelper::getNow();
+            $input['token'] = TextUtils::uniqueString();
+            $input['status'] = $status;
         }
 
         return $this->bookingMapper->persist($input);
