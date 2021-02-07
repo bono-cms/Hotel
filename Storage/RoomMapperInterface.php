@@ -14,6 +14,16 @@ namespace Hotel\Storage;
 interface RoomMapperInterface
 {
     /**
+     * Search for available rooms
+     * 
+     * @param string $checkin Check-in date
+     * @param string $checkout Check-out date
+     * @param array $criteria Capacity criteria
+     * @return array
+     */
+    public function search($checkin, $checkout, array $criteria);
+
+    /**
      * Fetch all available rooms
      * 
      * @return array

@@ -63,6 +63,19 @@ final class RoomService extends AbstractManager
     }
 
     /**
+     * Search for available rooms
+     * 
+     * @param string $checkin Check-in date
+     * @param string $checkout Check-out date
+     * @param array $criteria Capacity criteria
+     * @return array
+     */
+    public function search($checkin, $checkout, array $criteria)
+    {
+        return $this->roomMapper->search($checkin, $checkout, $criteria);
+    }
+
+    /**
      * Fetches room by its id
      * 
      * @param int $id Room id
