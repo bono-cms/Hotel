@@ -14,6 +14,7 @@ namespace Hotel;
 use Cms\AbstractCmsModule;
 use Hotel\Service\RoomService;
 use Hotel\Service\BookingService;
+use Hotel\Service\GalleryService;
 
 final class Module extends AbstractCmsModule
 {
@@ -22,12 +23,15 @@ final class Module extends AbstractCmsModule
      */
     public function getServiceProviders()
     {
+        // Mappers
         $roomMapper = $this->getMapper('/Hotel/Storage/MySQL/RoomMapper');
         $bookingMapper = $this->getMapper('/Hotel/Storage/MySQL/BookingMapper');
+        $galleryMapper = $this->getMapper('/Hotel/Storage/MySQL/GalleryMapper');
 
         return [
             'bookingService' => new BookingService($bookingMapper),
-            'roomService' => new RoomService($roomMapper)
+            'roomService' => new RoomService($roomMapper),
+            'galleryService' => new GalleryService($galleryMapper)
         ];
     }
 }
