@@ -14,6 +14,7 @@ namespace Hotel\Service;
 use Hotel\Storage\BookingMapperInterface;
 use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Date\TimeHelper;
 
 final class BookingService extends AbstractManager
 {
@@ -93,6 +94,11 @@ final class BookingService extends AbstractManager
      */
     public function save(array $input)
     {
+        // Append date only for new records
+        if (empty($input['id'])) {
+            $input['date'] = TimeHelper::getNow();
+        }
+
         return $this->bookingMapper->persist($input);
     }
 
