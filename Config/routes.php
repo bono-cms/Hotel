@@ -10,6 +10,11 @@
  */
 
 return [
+    //Site
+    '/module/hotel/search' => [
+        'controller' => 'Room@searchAction'
+    ],
+    
     // Rooms
     '/%s/module/hotel' => [
         'controller' => 'Admin:Room@indexAction'
