@@ -32,4 +32,15 @@ final class GalleryService
     {
         $this->galleryMapper = $galleryMapper;
     }
+
+    /**
+     * Fetch all images by room id
+     * 
+     * @param int $roomId
+     * @return array
+     */
+    public function fetchAll($roomId)
+    {
+        return $this->galleryMapper->fetchAll($roomId);
+    }
 }

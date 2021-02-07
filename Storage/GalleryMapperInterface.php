@@ -11,5 +11,13 @@
 
 namespace Hotel\Storage;
 
-interface GalleryMapperInterface {
+interface GalleryMapperInterface
+{
+    /**
+     * Fetch all images by room id
+     * 
+     * @param int $roomId
+     * @return array
+     */
+    public function fetchAll($roomId);
 }

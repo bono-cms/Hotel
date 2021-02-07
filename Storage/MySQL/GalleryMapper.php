@@ -23,4 +23,20 @@ final class GalleryMapper extends AbstractMapper implements GalleryMapperInterfa
     {
         return self::getWithPrefix('bono_module_hotel_rooms_gallery');
     }
+
+    /**
+     * Fetch all images by room id
+     * 
+     * @param int $roomId
+     * @return array
+     */
+    public function fetchAll($roomId)
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->whereEquals('room_id', $roomId)
+                       ->orderBy('order');
+
+        return $db->queryAll();
+    }
 }
