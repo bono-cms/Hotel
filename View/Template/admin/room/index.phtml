@@ -22,21 +22,26 @@ use Cms\View\Icon;
             'columns' => [
                 [
                     'column' => 'id',
-                    'label' => '#',
-                    'attributes' => [
-                        'class' => 'text-center text-muted'
-                    ]
+                    'label' => '#'
                 ],
 
                 [
-                    'column' => 'name',
-                    'attributes' => [
-                        'class' => null
-                    ]
+                    'column' => 'name'
+                ],
+
+                [
+                    'column' => 'adults',
+                    'label' => 'Maximal adults capacity'
+                ],
+
+                [
+                    'column' => 'children',
+                    'label' => 'Maximal children capacity'
                 ],
 
                 [
                     'column' => 'price',
+                    'label' => 'Price per night',
                     'value' => function($row){
                         return number_format($row['price']);
                     }
