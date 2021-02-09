@@ -1,0 +1,17 @@
+<form class="card" data-group="image" autocomplete="off">
+    <!-- Relational fields -->
+    <?= $this->field()->hidden('image[id]', $image->getId()); ?>
+    <?= $this->field()->hidden('image[room_id]', $image->getRoomId()); ?>
+
+    <!-- Image data -->
+    <?= $this->field('Sorting order')->number('image[order]', $image->getOrder(), ['class' => 'form-control']); ?>
+    <?= $this->field('File')->text('image[file]', $image->getFile(), ['class' => 'form-control']); ?>
+
+    <?php $this->loadPartial('actions', [
+        'new' => !$image->getId(),
+        'add' => ['Hotel:Admin:Gallery@addAction', $image->getRoomId()],
+        'edit' => 'Hotel:Admin:Gallery@editAction',
+        'save' => 'Hotel:Admin:Gallery@saveAction',
+        'cancel' => ['Hotel:Admin:Room@editAction', $image->getRoomId()]
+    ]); ?>
+</form>
