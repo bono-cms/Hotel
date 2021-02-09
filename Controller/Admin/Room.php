@@ -45,7 +45,8 @@ final class Room extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('room/form', [
-            'room' => $room
+            'room' => $room,
+            'new' => !is_array($room)
         ]);
     }
 

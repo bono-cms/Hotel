@@ -11,6 +11,9 @@ defined('KRYSTAL') or die;
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="nav-item active"><a class="nav-link" href="#hotel-room-active" role="tab" data-toggle="tab"><i class="fas fa-hotel"></i> <?php $this->show('Room'); ?></a></li>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
+        <?php if (!$new): ?>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-gallery" role="tab" data-toggle="tab"><i class="fas fa-camera-retro"></i> <?php $this->show('Gallery'); ?></a></li>
+        <?php endif; ?>
 	</ul>
 
     <div class="tab-content">
@@ -38,6 +41,13 @@ defined('KRYSTAL') or die;
             <?= $this->field('Maximal adults capacity')->number('room[adults]', $entity->getAdults(), ['class' => 'form-control', 'min' => 1]); ?>
             <?= $this->field('Maximal children capacity')->number('room[children]', $entity->getChildren(), ['class' => 'form-control', 'min' => 0]); ?>
         </div>
+
+        <?php if (!$new): ?>
+        <!-- Gallery -->
+        <div class="tab-pane fade" id="hotel-room-gallery" role="tabpanel">
+            <p><a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Gallery@addAction', $entity->getId()); ?>"><i class="fas fa-camera-retro"></i> <?php $this->show('Upload new image'); ?></a></p>
+        </div>
+        <?php endif; ?>
     </div>
 
     <?php $this->loadPartial('actions', [
