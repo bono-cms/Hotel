@@ -36,6 +36,23 @@ return [
         'controller' => 'Admin:Room@saveAction'
     ],
 
+    // Room gallery
+    '/%s/module/hotel/room/gallery/add/(:var)' => [
+        'controller' => 'Admin:Gallery@addAction'
+    ],
+
+    '/%s/module/hotel/room/gallery/edit/(:var)' => [
+        'controller' => 'Admin:Gallery@editAction'
+    ],
+    
+    '/%s/module/hotel/room/gallery/delete/(:var)' => [
+        'controller' => 'Admin:Gallery@editAction'
+    ],
+
+    '/%s/module/hotel/room/gallery/save' => [
+        'controller' => 'Admin:Gallery@saveAction'
+    ],
+
     // Booking
     '/%s/module/hotel/booking' => [
         'controller' => 'Admin:Booking@indexAction'
