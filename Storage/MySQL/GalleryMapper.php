@@ -11,6 +11,7 @@
 
 namespace Hotel\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
 use Cms\Storage\MySQL\AbstractMapper;
 use Hotel\Storage\GalleryMapperInterface;
 
@@ -68,7 +69,7 @@ final class GalleryMapper extends AbstractMapper implements GalleryMapperInterfa
         $db = $this->db->select('*')
                        ->from(self::getTableName())
                        ->whereEquals('room_id', $roomId)
-                       ->orderBy('order');
+                       ->orderBy(new RawSqlFragment(sprintf('`order`, CASE WHEN `order` = 0 THEN %s END DESC', self::column('id'))));
 
         return $db->queryAll();
     }
