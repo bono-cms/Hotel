@@ -27,7 +27,7 @@ final class Gallery extends AbstractController
     {
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Hotel', 'Hotel:Admin:Room@indexAction')
-                                       ->addOne('Edit the room', $this->createUrl('Hotel:Admin:Room@editAction', [$image->getRoomId()]))
+                                       ->addOne($this->translator->translate('Edit the room "%s"', $image->getRoom()), $this->createUrl('Hotel:Admin:Room@editAction', [$image->getRoomId()]))
                                        ->addOne($title);
 
         return $this->view->render('room/gallery', [
@@ -43,10 +43,18 @@ final class Gallery extends AbstractController
      */
     public function addAction($roomId)
     {
-        $image = new VirtualEntity();
-        $image->setRoomId($roomId);
+        $room = $this->getModuleService('roomService')->fetchById($roomId, false);
 
-        return $this->createForm($image, 'Upload new image');
+        if ($room) {
+            $image = new VirtualEntity();
+            $image->setRoomId($roomId)
+                  ->setRoom($room->getName());
+
+            return $this->createForm($image, 'Upload new image');
+        } else {
+            return false;
+        }
+        
     }
 
     /**
