@@ -102,10 +102,7 @@ final class GalleryService extends AbstractManager
             if ($file) {
                 // Remove previous one
                 if (!empty($image['file'])) {
-                    if (!$this->imageManager->delete($image['id'], $image['file'])) {
-                        // If failed, then exit this method immediately
-                        return false;
-                    }
+                    $this->imageManager->delete($image['id'], $image['file']);
                 }
 
                 // Upload new file
@@ -147,6 +144,6 @@ final class GalleryService extends AbstractManager
      */
     public function fetchAll($roomId)
     {
-        return $this->galleryMapper->fetchAll($roomId);
+        return $this->prepareResults($this->galleryMapper->fetchAll($roomId));
     }
 }
