@@ -40,13 +40,16 @@ final class Room extends AbstractController
      */
     private function createForm($room, $title)
     {
+        $new = !is_array($room);
+
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()->addOne('Hotel', 'Hotel:Admin:Room@indexAction')
                                        ->addOne($title);
 
         return $this->view->render('room/form', [
             'room' => $room,
-            'new' => !is_array($room)
+            'new' => $new,
+            'images' => $new ? [] : $this->getModuleService('galleryService')->fetchAll($room[0]->getId())
         ]);
     }
 

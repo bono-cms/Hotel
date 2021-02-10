@@ -1,7 +1,9 @@
 <?php
 
 use Krystal\Form\Element;
+use Krystal\Widget\GridView\GridViewWidget;
 use Cms\Service\LanguageManager;
+use Cms\View\Icon;
 
 defined('KRYSTAL') or die;
 
@@ -12,7 +14,7 @@ defined('KRYSTAL') or die;
         <li role="presentation" class="nav-item active"><a class="nav-link" href="#hotel-room-active" role="tab" data-toggle="tab"><i class="fas fa-hotel"></i> <?php $this->show('Room'); ?></a></li>
         <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-configuration" role="tab" data-toggle="tab"><i class="fas fa-dice"></i> <?php $this->show('Configuration'); ?></a></li>
         <?php if (!$new): ?>
-        <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-gallery" role="tab" data-toggle="tab"><i class="fas fa-camera-retro"></i> <?php $this->show('Gallery'); ?></a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#hotel-room-gallery" role="tab" data-toggle="tab"><i class="fas fa-camera-retro"></i> <?php $this->show('Gallery'); ?> <small class="text-muted">(<?= count($images); ?>)</small></a></li>
         <?php endif; ?>
 	</ul>
 
@@ -46,6 +48,40 @@ defined('KRYSTAL') or die;
         <!-- Gallery -->
         <div class="tab-pane fade" id="hotel-room-gallery" role="tabpanel">
             <p><a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Gallery@addAction', $entity->getId()); ?>"><i class="fas fa-camera-retro"></i> <?php $this->show('Upload new image'); ?></a></p>
+
+            <?= $this->widget(new GridViewWidget($images, [
+                'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+                'columns' => [
+                    [
+                        'column' => 'file',
+                        'value' => function($image){
+                            return Element::image($image->getImageBag()->getUrl('400x400'), ['class' => 'img-fluid']);
+                        }
+                    ],
+
+                    [
+                        'column' => 'order',
+                        'label' => 'Sorting order'
+                    ]
+                ],
+
+                'actions' => [
+                    function($image){
+                        return Icon::edit(
+                            $this->url('Hotel:Admin:Gallery@editAction', $image->getId()),
+                            $this->translate('Edit this image')
+                        );
+                    },
+
+                    function($image){
+                        return Icon::remove(
+                            $this->url('Hotel:Admin:Gallery@deleteAction', $image->getId()),
+                            $this->translate('Delete this image')
+                        );
+                    }
+                ]
+            ])); ?>
+            
         </div>
         <?php endif; ?>
     </div>
