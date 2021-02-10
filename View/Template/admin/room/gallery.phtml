@@ -5,7 +5,14 @@
 
     <!-- Image data -->
     <?= $this->field('Sorting order')->number('image[order]', $image->getOrder(), ['class' => 'form-control']); ?>
-    <?= $this->field('File')->text('image[file]', $image->getFile(), ['class' => 'form-control']); ?>
+
+    <?php if ($image->getFile()): ?>
+    <p>
+        <img class="img-fluid" src="<?= $image->getImageBag()->getUrl('400x400'); ?>" />
+    </p>
+    <?php endif; ?>
+
+    <?= $this->field('File')->fileData('image[file]', $image->getFile(), 'image/*', ['class' => 'form-control']); ?>
 
     <?php $this->loadPartial('actions', [
         'new' => !$image->getId(),

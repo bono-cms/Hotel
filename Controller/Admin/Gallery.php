@@ -54,7 +54,6 @@ final class Gallery extends AbstractController
         } else {
             return false;
         }
-        
     }
 
     /**
