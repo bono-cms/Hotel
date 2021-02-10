@@ -50,7 +50,7 @@ defined('KRYSTAL') or die;
             <p><a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Gallery@addAction', $entity->getId()); ?>"><i class="fas fa-camera-retro"></i> <?php $this->show('Upload new image'); ?></a></p>
 
             <?= $this->widget(new GridViewWidget($images, [
-                'tableClass' => 'table table-bordered table-sm',
+                'tableClass' => 'table table-bordered',
                 'columns' => [
                     [
                         'column' => 'file',
