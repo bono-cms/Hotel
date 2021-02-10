@@ -46,6 +46,10 @@ final class GalleryService extends AbstractManager
                ->setOrder($row['order'])
                ->setFile($row['file']);
 
+        if (isset($row['room'])) {
+            $entity->setRoom($row['room']);
+        }
+
         return $entity;
     }
 
@@ -89,7 +93,7 @@ final class GalleryService extends AbstractManager
      */
     public function fetchById($id)
     {
-        return $this->prepareResult($this->galleryMapper->findByPk($id));
+        return $this->prepareResult($this->galleryMapper->fetchById($id));
     }
 
     /**
