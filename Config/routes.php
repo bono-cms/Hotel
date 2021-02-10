@@ -46,7 +46,7 @@ return [
     ],
     
     '/%s/module/hotel/room/gallery/delete/(:var)' => [
-        'controller' => 'Admin:Gallery@editAction'
+        'controller' => 'Admin:Gallery@deleteAction'
     ],
 
     '/%s/module/hotel/room/gallery/save' => [
