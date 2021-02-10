@@ -25,6 +25,39 @@ final class GalleryMapper extends AbstractMapper implements GalleryMapperInterfa
     }
 
     /**
+     * Fetch image by its id
+     * 
+     * @param int $id Image id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('room_id'),
+            self::column('order'),
+            self::column('file'),
+            RoomTranslationMapper::column('name') => 'room'
+        ];
+
+        $db = $this->db->select($columns)
+                       ->from(self::getTableName())
+                       // Room relation
+                       ->innerJoin(RoomMapper::getTableName(), [
+                            RoomMapper::column('id') => self::getRawColumn('room_id')
+                       ])
+                       // Room translation relation
+                       ->leftJoin(RoomTranslationMapper::getTableName(), [
+                            RoomTranslationMapper::column('id') => RoomMapper::getRawColumn('id'),
+                            RoomTranslationMapper::column('lang_id') => $this->getLangId()
+                       ])
+                       ->whereEquals(self::column('id'), $id);
+
+        return $db->query();
+    }
+
+    /**
      * Fetch all images by room id
      * 
      * @param int $roomId
