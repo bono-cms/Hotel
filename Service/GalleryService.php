@@ -122,7 +122,7 @@ final class GalleryService extends AbstractManager
      */
     public function deleteById($id)
     {
-        return $this->galleryMapper->deleteByPk($id);
+        return $this->galleryMapper->deleteByPk($id) && $this->imageManager->delete($id);
     }
 
     /**
