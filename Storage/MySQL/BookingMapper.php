@@ -46,9 +46,32 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
      */
     public function fetchAll()
     {
-        $db = $this->db->select('*')
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('room_id'),
+            self::column('datetime'),
+            self::column('client'),
+            self::column('amount'),
+            self::column('checkin'),
+            self::column('checkout'),
+            self::column('status'),
+            self::column('token'),
+            RoomTranslationMapper::column('name') => 'room'
+        ];
+
+        $db = $this->db->select($columns)
                        ->from(self::getTableName())
-                       ->orderBy('id')
+                       // Room relation
+                       ->leftJoin(RoomMapper::getTableName(), [
+                            RoomMapper::column('id') => self::getRawColumn('room_id')
+                       ])
+                       // Room translation
+                       ->leftJoin(RoomTranslationMapper::getTableName(), [
+                            RoomTranslationMapper::column('id') => RoomMapper::getRawColumn('id'),
+                            RoomTranslationMapper::column('lang_id') => $this->getLangId()
+                        ])
+                       ->orderBy(self::column('id'))
                        ->desc();
 
         return $db->queryAll();
