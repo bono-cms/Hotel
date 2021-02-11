@@ -16,6 +16,24 @@ use Site\Controller\AbstractController;
 final class Room extends AbstractController
 {
     /**
+     * Checks whether a room is availble on given dates
+     * 
+     * @return string
+     */
+    public function availableAction()
+    {
+        $result = $this->getModuleService('bookingService')->isAvailable(
+            $this->request->getQuery('room_id'),
+            $this->request->getQuery('checkin'),
+            $this->request->getQuery('checkout')
+        );
+
+        return $this->json([
+            'available' => $result
+        ]);
+    }
+
+    /**
      * Performs a search
      * 
      * @return string

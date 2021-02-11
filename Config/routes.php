@@ -14,6 +14,10 @@ return [
     '/module/hotel/search' => [
         'controller' => 'Room@searchAction'
     ],
+
+    '/module/hotel/available' => [
+        'controller' => 'Room@availableAction'
+    ],
     
     // Rooms
     '/%s/module/hotel' => [
