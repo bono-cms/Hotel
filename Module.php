@@ -44,6 +44,31 @@ final class Module extends AbstractCmsModule
         );
     }
     
+     /**
+     * Builds gallery image manager service
+     * 
+     * @return \Krystal\Image\Tool\ImageManager
+     */
+    private function createImageManager()
+    {
+        $plugins = [
+            'thumb' => [
+                'quality' => 85,
+                'dimensions' => [
+                    // For administration panel
+                    [400, 400],
+                ]
+            ]
+        ];
+
+        return new ImageManager(
+            '/data/uploads/module/hotel/rooms/',
+            $this->appConfig->getRootDir(),
+            $this->appConfig->getRootUrl(),
+            $plugins
+        );
+    }
+
    /**
      * {@inheritDoc}
      */
@@ -56,7 +81,7 @@ final class Module extends AbstractCmsModule
 
         return [
             'bookingService' => new BookingService($bookingMapper),
-            'roomService' => new RoomService($roomMapper),
+            'roomService' => new RoomService($roomMapper, $this->createImageManager()),
             'galleryService' => new GalleryService($galleryMapper, $this->createGalleryImageManager())
         ];
     }

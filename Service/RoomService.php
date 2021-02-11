@@ -11,9 +11,10 @@
 
 namespace Hotel\Service;
 
+use Krystal\Stdlib\VirtualEntity;
+use Krystal\Image\Tool\ImageManagerInterface;
 use Hotel\Storage\RoomMapperInterface;
 use Cms\Service\AbstractManager;
-use Krystal\Stdlib\VirtualEntity;
 
 final class RoomService extends AbstractManager
 {
@@ -25,14 +26,23 @@ final class RoomService extends AbstractManager
     private $roomMapper;
 
     /**
+     * Any compliant image manager instance
+     * 
+     * @var \Krystal\Image\Tool\ImageManagerInterface
+     */
+    private $imageManager;
+
+    /**
      * State initialization
      * 
      * @param \Hotel\Storage\RoomMapperInterface $roomMapper
+     * @param \Krystal\Image\Tool\ImageManagerInterface $imageManager
      * @return void
      */
-    public function __construct(RoomMapperInterface $roomMapper)
+    public function __construct(RoomMapperInterface $roomMapper, ImageManagerInterface $imageManager)
     {
         $this->roomMapper = $roomMapper;
+        $this->imageManager = $imageManager;
     }
 
     /**
@@ -40,6 +50,10 @@ final class RoomService extends AbstractManager
      */
     protected function toEntity(array $row)
     {
+        $imageBag = clone ($this->imageManager->getImageBag());
+        $imageBag->setId($row['id'])
+                 ->setCover($row['cover']);
+
         $entity = new VirtualEntity();
         $entity->setId($row['id'])
                ->setLangId($row['lang_id'])
@@ -48,7 +62,8 @@ final class RoomService extends AbstractManager
                ->setChildren($row['children'])
                ->setCover($row['cover'])
                ->setName($row['name'])
-               ->setDescription($row['description']);
+               ->setDescription($row['description'])
+               ->setImageBag($imageBag);
 
         return $entity;
     }
@@ -110,7 +125,7 @@ final class RoomService extends AbstractManager
      */
     public function deleteById($id)
     {
-        return $this->roomMapper->deleteEntity($id);
+        return $this->roomMapper->deleteEntity($id) && $this->imageManager->delete($id);
     }
 
     /**
@@ -121,6 +136,30 @@ final class RoomService extends AbstractManager
      */
     public function save(array $input)
     {
-        return $this->roomMapper->saveEntity($input['room'], $input['translation']);
+        $data = $input['data'];
+        $file = isset($input['files']['room']['cover']) ? $input['files']['room']['cover'] : false;
+
+        if (!$data['room']['id']) { // Creation
+            // If there's a file, then it needs to uploaded as a cover
+            $data['room']['cover'] = $file ? $file->getUniqueName() : '';
+
+            if ($file && $this->galleryMapper->persist($data['room'])) {
+                return $this->roomMapper->saveEntity($data['room'], $data['translation']);
+            }
+
+        } else { // Update
+            if ($file) {
+                // Remove previous one
+                if (!empty($data['room']['cover'])) {
+                    $this->imageManager->delete($data['room']['id'], $data['room']['cover']);
+                }
+
+                // Upload new file
+                $data['room']['cover'] = $file->getUniqueName();
+                $this->imageManager->upload($data['room']['id'], $file);
+            }
+
+            return $this->roomMapper->saveEntity($data['room'], $data['translation']);
+        }
     }
 }

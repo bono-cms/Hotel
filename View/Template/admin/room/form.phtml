@@ -42,6 +42,14 @@ defined('KRYSTAL') or die;
             <?= $this->field('Price per night')->number('room[price]', $entity->getPrice(), ['class' => 'form-control']); ?>
             <?= $this->field('Maximal adults capacity')->number('room[adults]', $entity->getAdults(), ['class' => 'form-control', 'min' => 1]); ?>
             <?= $this->field('Maximal children capacity')->number('room[children]', $entity->getChildren(), ['class' => 'form-control', 'min' => 0]); ?>
+
+            <?php if ($entity->getCover()): ?>
+            <p>
+                <img class="img-fluid" src="<?= $entity->getImageBag()->getUrl('400x400'); ?>" />
+            </p>
+            <?php endif; ?>
+
+            <?= $this->field('Room cover')->fileData('room[cover]', $entity->getCover(), 'image/*', ['class' => 'form-control']); ?>
         </div>
 
         <?php if (!$new): ?>

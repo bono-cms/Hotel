@@ -102,9 +102,9 @@ final class Room extends AbstractController
      */
     public function saveAction()
     {
-        $input = $this->request->getPost();
+        $input = $this->request->getAll();
 
-        $isNew = empty($input['room']['id']);
+        $isNew = empty($input['data']['room']['id']);
         $roomService = $this->getModuleService('roomService');
 
         if ($roomService->save($input)) {
