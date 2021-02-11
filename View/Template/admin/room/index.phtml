@@ -1,5 +1,6 @@
 <?php
 
+use Krystal\Form\Element;
 use Krystal\Widget\GridView\GridViewWidget;
 use Cms\View\Icon;
 
@@ -18,11 +19,18 @@ use Cms\View\Icon;
 <div class="card">
     <div class="table-responsive">
         <?= $this->widget(new GridViewWidget($rooms, [
-            'tableClass' => 'table table-hover table-bordered table-striped table-sm',
+            'tableClass' => 'table table-bordered',
             'columns' => [
                 [
                     'column' => 'id',
                     'label' => '#'
+                ],
+
+                [
+                    'column' => 'cover',
+                    'value' => function($room){
+                        return Element::image($room->getImageBag()->getUrl('400x400'), ['class' => 'img-fluid']);
+                    }
                 ],
 
                 [
