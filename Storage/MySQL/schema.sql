@@ -5,7 +5,8 @@ CREATE TABLE `bono_module_hotel_rooms` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `price` FLOAT NOT NULL,
     `adults` SMALLINT NOT NULL COMMENT 'Max.adult capacity',
-    `children` SMALLINT NOT NULL COMMENT 'Max.children capacity'
+    `children` SMALLINT NOT NULL COMMENT 'Max.children capacity',
+    `cover` varchar(255) NOT NULL COMMENT 'Cover file'
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
 /* Roooms lozations */

@@ -46,6 +46,7 @@ final class RoomService extends AbstractManager
                ->setPrice($row['price'])
                ->setAdults($row['adults'])
                ->setChildren($row['children'])
+               ->setCover($row['cover'])
                ->setName($row['name'])
                ->setDescription($row['description']);
 
