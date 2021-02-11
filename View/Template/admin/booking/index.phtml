@@ -32,6 +32,10 @@ use Cms\View\Icon;
                 ],
 
                 [
+                    'column' => 'room'
+                ],
+
+                [
                     'column' => 'amount',
                     'value' => function($row){
                         return number_format($row['amount']) . ' USD ';

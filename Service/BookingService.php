@@ -53,6 +53,10 @@ final class BookingService extends AbstractManager
                ->setCheckout($row['checkout'])
                ->setStatus($row['status']);
 
+        if (isset($row['room'])) {
+            $entity->setRoom($row['room']);
+        }
+
         return $entity;
     }
 
