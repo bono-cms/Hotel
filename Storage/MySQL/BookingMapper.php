@@ -11,6 +11,7 @@
 
 namespace Hotel\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
 use Cms\Storage\MySQL\AbstractMapper;
 use Hotel\Storage\BookingMapperInterface;
 use Hotel\Collection\BookingStatusCollection;
@@ -37,6 +38,26 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
                        ->whereEquals('token', $token);
 
         return (bool) $db->execute(true);
+    }
+
+    /**
+     * Checks whether a single room is available at given dates
+     * 
+     * @param int $roomId
+     * @param string $checkin
+     * @param string $checkout
+     * @return boolean
+     */
+    public function isAvailable($roomId, $checkin, $checkout)
+    {
+        $db = $this->db->select()
+                       ->count('id')
+                       ->from(self::getTableName())
+                       ->where('room_id', '=', $roomId)
+                       ->andWhere('checkin', '>=', $checkin)
+                       ->andWhere('checkout', '<=', $checkout);
+
+        return !$db->queryScalar();
     }
 
     /**

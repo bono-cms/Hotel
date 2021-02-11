@@ -61,6 +61,19 @@ final class BookingService extends AbstractManager
     }
 
     /**
+     * Checks whether a single room is available at given dates
+     * 
+     * @param int $roomId
+     * @param string $checkin
+     * @param string $checkout
+     * @return boolean
+     */
+    public function isAvailable($roomId, $checkin, $checkout)
+    {
+        return $this->bookingMapper->isAvailable($roomId, $checkin, $checkout);
+    }
+
+    /**
      * Adds new booking entry
      * 
      * @param array $input Raw input data

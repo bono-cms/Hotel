@@ -14,6 +14,16 @@ namespace Hotel\Storage;
 interface BookingMapperInterface
 {
     /**
+     * Checks whether a single room is available at given dates
+     * 
+     * @param int $roomId
+     * @param string $checkin
+     * @param string $checkout
+     * @return boolean
+     */
+    public function isAvailable($roomId, $checkin, $checkout);
+
+    /**
      * Confirms booking by a token
      * 
      * @param string $token
