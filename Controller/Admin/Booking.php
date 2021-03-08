@@ -111,6 +111,6 @@ final class Booking extends AbstractController
 
         $this->flashBag->set('success', $isNew ? 'Booking entry has been created successfully' : 'Booking entry has been updated successfully');
 
-        return $isNew ? 1 : $bookingService->getLastId();
+        return !$isNew ? 1 : $bookingService->getLastId();
     }
 }
