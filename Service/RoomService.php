@@ -70,6 +70,17 @@ final class RoomService extends AbstractManager
     }
 
     /**
+     * Returns a collection of switching URLs
+     * 
+     * @param string $id Room ID
+     * @return array
+     */
+    public function getSwitchUrls($id)
+    {
+        return $this->roomMapper->createSwitchUrls($id, 'Hotel', 'Hotel:Room@indexAction');
+    }
+
+    /**
      * Returns last room id
      * 
      * @return int
