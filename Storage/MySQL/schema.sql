@@ -40,6 +40,18 @@ CREATE TABLE `bono_module_hotel_rooms_booking` (
 
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
+/* Booking guests */
+DROP TABLE IF EXISTS `bono_module_hotel_booking_guest`;
+CREATE TABLE `bono_module_hotel_booking_guest` (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Guest ID',
+    `booking_id` INT NOT NULL COMMENT 'Attached booking ID',
+    `client` varchar(255) NOT NULL,
+    `email` varchar(255) COMMENT 'Optional email',
+
+    FOREIGN KEY (booking_id) REFERENCES bono_module_hotel_rooms_booking(id) ON DELETE CASCADE
+
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+
 /* Gallery */
 DROP TABLE IF EXISTS `bono_module_hotel_rooms_gallery`;
 CREATE TABLE `bono_module_hotel_rooms_gallery` (
