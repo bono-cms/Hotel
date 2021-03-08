@@ -11,6 +11,7 @@
 
 namespace Hotel\Service;
 
+use Hotel\Storage\BookingGuestMapperInterface;
 use Hotel\Storage\BookingMapperInterface;
 use Hotel\Collection\BookingStatusCollection;
 use Cms\Service\AbstractManager;
@@ -28,14 +29,23 @@ final class BookingService extends AbstractManager
     private $bookingMapper;
 
     /**
+     * Guest mapper
+     * 
+     * @var \Hotel\Storage\BookingGuestMapperInterface
+     */
+    private $bookingGuestMapper;
+
+    /**
      * State initialization
      * 
      * @param \Hotel\Storage\BookingMapperInterface $bookingMapper
+     * @param \Hotel\Storage\BookingGuestMapperInterface $bookingGuestMapper
      * @return void
      */
-    public function __construct(BookingMapperInterface $bookingMapper)
+    public function __construct(BookingMapperInterface $bookingMapper, BookingGuestMapperInterface $bookingGuestMapper)
     {
         $this->bookingMapper = $bookingMapper;
+        $this->bookingGuestMapper = $bookingGuestMapper;
     }
 
     /**

@@ -77,10 +77,11 @@ final class Module extends AbstractCmsModule
         // Mappers
         $roomMapper = $this->getMapper('/Hotel/Storage/MySQL/RoomMapper');
         $bookingMapper = $this->getMapper('/Hotel/Storage/MySQL/BookingMapper');
+        $bookingGuestMapper = $this->getMapper('/Hotel/Storage/MySQL/BookingGuestMapper');
         $galleryMapper = $this->getMapper('/Hotel/Storage/MySQL/GalleryMapper');
 
         return [
-            'bookingService' => new BookingService($bookingMapper),
+            'bookingService' => new BookingService($bookingMapper, $bookingGuestMapper),
             'roomService' => new RoomService($roomMapper, $this->createImageManager()),
             'galleryService' => new GalleryService($galleryMapper, $this->createGalleryImageManager())
         ];
