@@ -30,6 +30,12 @@ CREATE TABLE `bono_module_hotel_rooms_booking` (
     `room_id` INT NOT NULL COMMENT 'Attached room ID',
     `datetime` DATETIME NOT NULL COMMENT 'Date and time of booking',
     `client` varchar(255) NOT NULL COMMENT 'Client name',
+
+    /* Extras */
+    `phone` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `comment` TEXT NOT NULL,
+
     `amount` FLOAT NOT NULL COMMENT 'Total amount payed',
     `checkin` DATE COMMENT 'Check-in date',
     `checkout` DATE COMMENT 'Check-out date',
