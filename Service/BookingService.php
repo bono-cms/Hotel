@@ -217,14 +217,15 @@ final class BookingService extends AbstractManager
     {
         // Whether this record is new
         $isNew = empty($input['id']);
-        
-        $token = TextUtils::uniqueString();
 
         // Append date only for new records
         if ($isNew) {
+            $token = TextUtils::uniqueString();
             $input['datetime'] = TimeHelper::getNow();
             $input['token'] = $token;
             $input['status'] = $status;
+        } else {
+            $token = $input['token'];
         }
 
         $this->bookingMapper->persist($input);
