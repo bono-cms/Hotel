@@ -11,6 +11,7 @@
 
 namespace Hotel\Service;
 
+use DateTime;
 use Hotel\Storage\BookingGuestMapperInterface;
 use Hotel\Storage\BookingMapperInterface;
 use Hotel\Collection\BookingStatusCollection;
@@ -46,6 +47,26 @@ final class BookingService extends AbstractManager
     {
         $this->bookingMapper = $bookingMapper;
         $this->bookingGuestMapper = $bookingGuestMapper;
+    }
+
+    /**
+     * Helper method to count stay duration in days
+     * 
+     * @param string $checkin
+     * @param string $checkout
+     * @return int Number of days
+     */
+    public static function getDuration($checkin, $checkout)
+    {
+        $date = new DateTime($checkin);
+        $date->setTime(0, 0, 0);
+
+        $now = new DateTime($checkout);
+        $now->setTime(0, 0, 0);
+
+        $interval = $now->diff($date);
+
+        return $interval->d;
     }
 
     /**
