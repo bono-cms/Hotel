@@ -176,17 +176,19 @@ final class BookingService extends AbstractManager
      * @param array $input Raw input data
      * @param int $status Status constant
      * @param array $guests Optional guests
-     * @return boolean
+     * @return string Token string on success
      */
     public function save(array $input, $status = BookingStatusCollection::STATUS_CONFIRMED, array $guests = [])
     {
         // Whether this record is new
         $isNew = empty($input['id']);
+        
+        $token = TextUtils::uniqueString();
 
         // Append date only for new records
         if ($isNew) {
-            $input['date'] = TimeHelper::getNow();
-            $input['token'] = TextUtils::uniqueString();
+            $input['datetime'] = TimeHelper::getNow();
+            $input['token'] = $token;
             $input['status'] = $status;
         }
 
@@ -194,11 +196,11 @@ final class BookingService extends AbstractManager
 
         // Append guests if available
         if ($isNew && !empty($guests)) {
-            $bookingId = $this->bookingGuestMapper->getMaxId();
+            $bookingId = $this->bookingMapper->getMaxId();
             $this->saveGuests($bookingId, $guests);
         }
 
-        return true;
+        return $token;
     }
 
     /**
