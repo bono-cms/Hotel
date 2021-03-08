@@ -19,6 +19,22 @@ return [
         'controller' => 'Room@availableAction'
     ],
     
+    '/module/hotel/booking' => [
+        'controller' => 'Booking@indexAction'
+    ],
+
+    '/module/hotel/booking/book' => [
+        'controller' => 'Booking@bookAction'
+    ],
+
+    '/module/hotel/booking/gateway/(:var)' => [
+        'controller' => 'Booking@gatewayAction'
+    ],
+
+    '/module/hotel/booking/response/(:var)' => [
+        'controller' => 'Booking@responseAction'
+    ],
+
     // Rooms
     '/%s/module/hotel' => [
         'controller' => 'Admin:Room@indexAction'
