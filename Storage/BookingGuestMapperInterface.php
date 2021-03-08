@@ -13,5 +13,11 @@ namespace Hotel\Storage;
 
 interface BookingGuestMapperInterface
 {
-    
+    /**
+     * Fetch guests by booking id
+     * 
+     * @param int $bookingId
+     * @return array
+     */
+    public function fetchGuestsByBookingId($bookingId);
 }

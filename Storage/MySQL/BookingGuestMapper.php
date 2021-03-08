@@ -23,4 +23,19 @@ final class BookingGuestMapper extends AbstractMapper implements BookingGuestMap
     {
         return self::getWithPrefix('bono_module_hotel_booking_guest');
     }
+
+    /**
+     * Fetch guests by booking id
+     * 
+     * @param int $bookingId
+     * @return array
+     */
+    public function fetchGuestsByBookingId($bookingId)
+    {
+        $db = $this->db->select('*')
+                       ->from(self::getTableName())
+                       ->whereEquals('booking_id', $bookingId);
+
+        return $db->queryAll();
+    }
 }
