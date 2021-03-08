@@ -88,8 +88,13 @@ final class Booking extends AbstractController
             $room = $this->getModuleService('roomService')->fetchById($roomId, false);
 
             if ($room !== false) {
+                // Count verification
+                if (($room->getAdults() + $room->getChildren()) < ($guests - 1)){
+                    // Unexpected capacity. Handle this error
+                }
+
                 $page = new VirtualEntity();
-                $page->setTitle('Booking a room')
+                $page->setTitle($this->translator->translate('Booking a room "%s"', $room->getName()))
                      ->setSeo(false);
 
                 // Load view plugins
