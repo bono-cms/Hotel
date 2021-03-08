@@ -40,7 +40,7 @@ CREATE TABLE `bono_module_hotel_rooms_booking` (
     `checkin` DATE COMMENT 'Check-in date',
     `checkout` DATE COMMENT 'Check-out date',
     `status` TINYINT NOT NULL COMMENT 'Booking status constant',
-    `token` varchar(32) NOT NULL COMMENT 'Booking token'
+    `token` varchar(32) NOT NULL COMMENT 'Booking token',
 
     FOREIGN KEY (room_id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE
 
