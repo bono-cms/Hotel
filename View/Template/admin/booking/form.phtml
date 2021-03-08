@@ -21,6 +21,8 @@ use Krystal\Widget\GridView\GridViewWidget;
         <div class="tab-pane container active" id="booking-details">
             <form data-group="booking" autocomplete="off">
                 <?= $this->field()->hidden('booking[id]', $booking->getId()); ?>
+                <?= $this->field()->hidden('booking[token]', $booking->getToken()); ?>
+
                 <?= $this->field('Client')->text('booking[client]', $booking->getClient(), ['class' => 'form-control']); ?>
                 <?= $this->field('Email')->text('booking[email]', $booking->getEmail(), ['class' => 'form-control']); ?>
                 <?= $this->field('Phone')->text('booking[phone]', $booking->getPhone(), ['class' => 'form-control']); ?>
