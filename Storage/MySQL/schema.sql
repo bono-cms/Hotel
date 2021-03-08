@@ -9,17 +9,19 @@ CREATE TABLE `bono_module_hotel_rooms` (
     `cover` varchar(255) NOT NULL COMMENT 'Cover file'
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
-/* Roooms lozations */
+/* Rooms localizations */
 DROP TABLE IF EXISTS `bono_module_hotel_rooms_translations`;
 CREATE TABLE `bono_module_hotel_rooms_translations` (
     `id` INT NOT NULL COMMENT 'Room ID',
     `lang_id` INT NOT NULL COMMENT 'Corresponding Language ID',
+	`web_page_id` INT NOT NULL COMMENT 'Attached Web Page Id',
     `name` varchar(254) NOT NULL COMMENT 'Room name',
     `description` TEXT NOT NULL COMMENT 'Room description',
 
     FOREIGN KEY (id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE,
-    FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE
-    
+    FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (web_page_id) REFERENCES bono_module_cms_webpages(id) ON DELETE CASCADE
+
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
 /* Rooms booking */
