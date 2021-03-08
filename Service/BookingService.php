@@ -149,22 +149,56 @@ final class BookingService extends AbstractManager
     }
 
     /**
-     * Persists a booking entry
+     * Save guests
      * 
-     * @param array $input
-     * @param int $status Status constant
+     * @param int $bookingId Attached booking ID
+     * @param array $guests
      * @return boolean
      */
-    public function save(array $input, $status = BookingStatusCollection::STATUS_CONFIRMED)
+    private function saveGuests($bookingId, array $guests)
     {
+        $values = [];
+
+        foreach ($guests as $guest) {
+            $values[] = [
+                $bookingId,
+                $guest['client'],
+                $guest['email']
+            ];
+        }
+
+        return $this->bookingGuestMapper->saveMany($values);
+    }
+
+    /**
+     * Persists a booking entry
+     * 
+     * @param array $input Raw input data
+     * @param int $status Status constant
+     * @param array $guests Optional guests
+     * @return boolean
+     */
+    public function save(array $input, $status = BookingStatusCollection::STATUS_CONFIRMED, array $guests = [])
+    {
+        // Whether this record is new
+        $isNew = empty($input['id']);
+
         // Append date only for new records
-        if (empty($input['id'])) {
+        if ($isNew) {
             $input['date'] = TimeHelper::getNow();
             $input['token'] = TextUtils::uniqueString();
             $input['status'] = $status;
         }
 
-        return $this->bookingMapper->persist($input);
+        $this->bookingMapper->persist($input);
+
+        // Append guests if available
+        if ($isNew && !empty($guests)) {
+            $bookingId = $this->bookingGuestMapper->getMaxId();
+            $this->saveGuests($bookingId, $guests);
+        }
+
+        return true;
     }
 
     /**
