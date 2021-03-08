@@ -30,8 +30,41 @@ defined('KRYSTAL') or die;
 
                     <?= $this->field()->hidden(sprintf('translation[%s][name]', $language->getId()), $entity->getId()); ?>
                     <?= $this->field()->hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
+                    <?= $this->field()->hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
+
                     <?= $this->field('Name')->text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
                     <?= $this->field('Description')->textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
+
+                    <div class="options">
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+                            <div class="col-lg-10">
+                                <div class="input-group">
+                                    <?php echo Element::text(sprintf('translation[%s][slug]', $language->getId()), $entity->getSlug(), array('class' => 'form-control', 'placeholder' => $this->translate('URL slug for this post. By default is taken from the name'))); ?>
+
+                                    <span class="input-group-addon">
+                                        <a href="#" data-slug-selector="<?= LanguageManager::generateSelector($language->getId()); ?>"><i class="glyphicon glyphicon-refresh" data-toggle="tooltip" title="<?php $this->show('Refresh'); ?>"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?= $this->field('Change frequency')->select(sprintf('translation[%s][changefreq]', $language->getId()), $this->translateArray($changeFreqs), $entity->getChangeFreq(), ['class' => 'form-control']); ?>
+                        <?= $this->field('Priority')->select(sprintf('translation[%s][priority]', $language->getId()), $priorities, $entity->getPriority(), ['class' => 'form-control']); ?>
+
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+                            <div class="col-lg-10">
+                                <div class="input-group">
+                                    <?php echo Element::text(sprintf('translation[%s][title]', $language->getId()), $entity->getTitle(), array('class' => 'form-control', 'data-input' => 'title', 'placeholder' => $this->translate('Room title'))); ?>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?= $this->field('Keywords')->text(sprintf('translation[%s][keywords]', $language->getId()), $entity->getKeywords(), ['class' => 'form-control', 'placeholder' => $this->translate('Keywords used for search engines')]); ?>
+                        <?= $this->field('Description')->textarea(sprintf('translation[%s][meta_description]', $language->getId()), $entity->getMetaDescription(), ['class' => 'form-control', 'placeholder' => $this->translate('Meta description for search engines')]); ?>
+                    </div>                    
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -99,6 +132,7 @@ defined('KRYSTAL') or die;
         'add' => 'Hotel:Admin:Room@addAction',
         'edit' => 'Hotel:Admin:Room@editAction',
         'save' => 'Hotel:Admin:Room@saveAction',
-        'cancel' => 'Hotel:Admin:Room@indexAction'
+        'cancel' => 'Hotel:Admin:Room@indexAction',
+        'options' => true
     ]); ?>
 </form>
