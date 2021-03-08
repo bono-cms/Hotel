@@ -32,6 +32,14 @@ interface BookingMapperInterface
     public function confirmByToken($token);
 
     /**
+     * Fetch booking entry by its token
+     * 
+     * @param string $token
+     * @return array
+     */
+    public function fetchByToken($token);
+
+    /**
      * Fetch all booking entries
      * 
      * @return array

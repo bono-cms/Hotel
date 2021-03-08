@@ -61,6 +61,17 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
     }
 
     /**
+     * Fetch booking entry by its token
+     * 
+     * @param string $token
+     * @return array
+     */
+    public function fetchByToken($token)
+    {
+        return $this->fetchByColumn('token', $token);
+    }
+
+    /**
      * Fetch all booking entries
      * 
      * @return array

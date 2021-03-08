@@ -117,6 +117,17 @@ final class BookingService extends AbstractManager
     }
 
     /**
+     * Fetches booking entry by its token
+     * 
+     * @param string $token
+     * @return string
+     */
+    public function fetchByToken($token)
+    {
+        return $this->prepareResult($this->bookingMapper->fetchByToken($token));
+    }
+
+    /**
      * Fetch all bookings
      * 
      * @return array
