@@ -46,6 +46,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             self::column('adults'),
             self::column('children'),
             self::column('cover'),
+            RoomTranslationMapper::column('web_page_id'),
             RoomTranslationMapper::column('lang_id'),
             RoomTranslationMapper::column('name'),
             RoomTranslationMapper::column('description')
@@ -147,7 +148,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
      */
     public function fetchById($id, $withTranslations)
     {
-        return $this->findEntity($this->getColumns(), $id, $withTranslations);
+        return $this->findWebPage($this->getColumns(), $id, $withTranslations);
     }
 
     /**
@@ -157,7 +158,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
      */
     public function fetchAll()
     {
-        $db = $this->createEntitySelect($this->getColumns())
+        $db = $this->createWebPageSelect($this->getColumns())
                     // Language ID constraint
                    ->whereEquals(RoomTranslationMapper::column('lang_id'), $this->getLangId());
 
