@@ -50,8 +50,8 @@ use Cms\View\Icon;
                 [
                     'column' => 'price',
                     'label' => 'Price per night',
-                    'value' => function($row){
-                        return number_format($row['price']);
+                    'value' => function($row) use ($currency){
+                        return number_format($row['price']) . ' USD ';
                     }
                 ]
             ],
