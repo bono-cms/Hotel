@@ -16,6 +16,31 @@ use Site\Controller\AbstractController;
 final class Room extends AbstractController
 {
     /**
+     * Renders room by its id
+     * 
+     * @param int $id Room id
+     * @return string
+     */
+    public function indexAction($id)
+    {
+        $roomService = $this->getModuleService('roomService');
+        $room = $roomService->fetchById($id, false);
+
+        if ($room) {
+            $this->loadSitePlugins();
+
+            return $this->view->render('hotel-room', [
+                'page' => $room,
+                'room' => $room,
+                'languages' => $roomService->getSwitchUrls($id)
+            ]);
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Checks whether a room is availble on given dates
      * 
      * @return string
