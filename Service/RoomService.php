@@ -57,6 +57,7 @@ final class RoomService extends AbstractManager
         $entity = new VirtualEntity();
         $entity->setId($row['id'])
                ->setLangId($row['lang_id'])
+               ->setWebPageId($row['web_page_id'])
                ->setPrice($row['price'])
                ->setAdults($row['adults'])
                ->setChildren($row['children'])
@@ -144,7 +145,7 @@ final class RoomService extends AbstractManager
             $data['room']['cover'] = $file ? $file->getUniqueName() : '';
 
             if ($file && $this->galleryMapper->persist($data['room'])) {
-                return $this->roomMapper->saveEntity($data['room'], $data['translation']);
+                return $this->roomMapper->savePage('Hotel', 'Hotel:Room@indexAction', $data['room'], $data['translation']);
             }
 
         } else { // Update
@@ -159,7 +160,7 @@ final class RoomService extends AbstractManager
                 $this->imageManager->upload($data['room']['id'], $file);
             }
 
-            return $this->roomMapper->saveEntity($data['room'], $data['translation']);
+            return $this->roomMapper->savePage('Hotel', 'Hotel:Room@indexAction', $data['room'], $data['translation']);
         }
     }
 }
