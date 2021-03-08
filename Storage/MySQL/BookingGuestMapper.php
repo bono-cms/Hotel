@@ -25,6 +25,26 @@ final class BookingGuestMapper extends AbstractMapper implements BookingGuestMap
     }
 
     /**
+     * Insert many guests at once (in one query)
+     * 
+     * @param array $guests
+     * @return boolean
+     */
+    public function saveMany(array $values)
+    {
+        // Target columns
+        $columns = [
+            'booking_id',
+            'client',
+            'email'
+        ];
+
+        $db = $this->db->insertMany(self::getTableName(), $columns, $values);
+
+        return $db->execute();
+    }
+
+    /**
      * Fetch guests by booking id
      * 
      * @param int $bookingId

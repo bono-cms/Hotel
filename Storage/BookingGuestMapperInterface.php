@@ -20,4 +20,12 @@ interface BookingGuestMapperInterface
      * @return array
      */
     public function fetchGuestsByBookingId($bookingId);
+
+    /**
+     * Insert many guests at once (in one query)
+     * 
+     * @param array $guests
+     * @return boolean
+     */
+    public function saveMany(array $values);
 }
