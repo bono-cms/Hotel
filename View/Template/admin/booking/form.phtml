@@ -1,15 +1,57 @@
-<form class="card" data-group="booking" autocomplete="off">
-    <?= $this->field()->hidden('booking[id]', $booking->getId()); ?>
-    <?= $this->field('Client')->text('booking[client]', $booking->getClient(), ['class' => 'form-control']); ?>
-    <?= $this->field('Amount')->text('booking[amount]', $booking->getAmount(), ['class' => 'form-control']); ?>
-    <?= $this->field('Check-in')->text('booking[checkin]', $booking->getCheckin(), ['class' => 'form-control']); ?>
-    <?= $this->field('Check-out')->text('booking[checkout]', $booking->getCheckout(), ['class' => 'form-control']); ?>
+<?php
 
-    <?php $this->loadPartial('actions', [
-        'new' => !$booking->getId(),
-        'add' => 'Hotel:Admin:Booking@addAction',
-        'edit' => 'Hotel:Admin:Booking@editAction',
-        'save' => 'Hotel:Admin:Booking@saveAction',
-        'cancel' => 'Hotel:Admin:Booking@indexAction'
-    ]); ?>
-</form>
+use Krystal\Widget\GridView\GridViewWidget;
+
+?>
+
+<div class="card">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#booking-details"><i class="fas fa-edit"></i> <?= $this->translate('Booking details'); ?></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#booking-guest"><i class="fas fa-user"></i> <?= $this->translate('Guests'); ?> <small class="text-muted">(<?= count($guests); ?>)</small></a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="booking-details">
+            <form data-group="booking" autocomplete="off">
+                <?= $this->field()->hidden('booking[id]', $booking->getId()); ?>
+                <?= $this->field('Client')->text('booking[client]', $booking->getClient(), ['class' => 'form-control']); ?>
+                <?= $this->field('Amount')->text('booking[amount]', $booking->getAmount(), ['class' => 'form-control']); ?>
+                <?= $this->field('Check-in')->text('booking[checkin]', $booking->getCheckin(), ['class' => 'form-control']); ?>
+                <?= $this->field('Check-out')->text('booking[checkout]', $booking->getCheckout(), ['class' => 'form-control']); ?>
+
+                <?php $this->loadPartial('actions', [
+                    'new' => !$booking->getId(),
+                    'add' => 'Hotel:Admin:Booking@addAction',
+                    'edit' => 'Hotel:Admin:Booking@editAction',
+                    'save' => 'Hotel:Admin:Booking@saveAction',
+                    'cancel' => 'Hotel:Admin:Booking@indexAction'
+                ]); ?>
+            </form>
+        </div>
+
+        <div class="tab-pane container fade" id="booking-guest">
+            <?= $this->widget(new GridViewWidget($guests, [
+                'tableClass' => 'table table-sm',
+                'columns' => [
+                    [
+                        'column' => 'client',
+                        'attributes' => [
+                            'class' => null
+                        ]
+                    ],
+
+                    [
+                        'column' => 'email'
+                    ]
+                ]
+            ])); ?>
+        </div>
+    </div>
+</div>
