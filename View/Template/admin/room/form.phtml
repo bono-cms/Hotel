@@ -28,7 +28,7 @@ defined('KRYSTAL') or die;
                     <?php $entity = LanguageManager::findByLangId($language->getId(), $room); ?>
                     <?php $this->loadPartial('language-name', array('language' => $language)); ?>
 
-                    <?= $this->field()->hidden(sprintf('translation[%s][name]', $language->getId()), $entity->getId()); ?>
+                    <?= $this->field()->hidden(sprintf('translation[%s][id]', $language->getId()), $entity->getId()); ?>
                     <?= $this->field()->hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
                     <?= $this->field()->hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
 
