@@ -11,6 +11,7 @@
 
 namespace Hotel\Controller;
 
+use Hotel\Service\BookingService;
 use Site\Controller\AbstractController;
 use Krystal\Stdlib\VirtualEntity;
 
@@ -89,6 +90,7 @@ final class Room extends AbstractController
                  ->setMetaDescription(null);
 
             return $this->view->render('hotel-rooms', [
+                'duration' => BookingService::getDuration($checkin, $checkout),
                 'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
                 'rooms' => $this->getModuleService('roomService')->search($checkin, $checkout, $criteria),
                 'page' => $page
