@@ -15,6 +15,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Hotel\Storage\RoomMapperInterface;
 use Cms\Service\AbstractManager;
+use Cms\Service\WebPageManagerInterface;
 
 final class RoomService extends AbstractManager
 {
@@ -33,16 +34,25 @@ final class RoomService extends AbstractManager
     private $imageManager;
 
     /**
+     * Web page manager to deal with slugs
+     * 
+     * @var \Cms\Service\WebPageManagerInterface
+     */
+    private $webPageManager;
+
+    /**
      * State initialization
      * 
      * @param \Hotel\Storage\RoomMapperInterface $roomMapper
      * @param \Krystal\Image\Tool\ImageManagerInterface $imageManager
+     * @param \Cms\Service\WebPageManagerInterface $webPageManager
      * @return void
      */
-    public function __construct(RoomMapperInterface $roomMapper, ImageManagerInterface $imageManager)
+    public function __construct(RoomMapperInterface $roomMapper, ImageManagerInterface $imageManager, WebPageManagerInterface $webPageManager)
     {
         $this->roomMapper = $roomMapper;
         $this->imageManager = $imageManager;
+        $this->webPageManager = $webPageManager;
     }
 
     /**
@@ -68,6 +78,8 @@ final class RoomService extends AbstractManager
                ->setMetaDescription($row['meta_description'])
                ->setKeywords($row['keywords'])
                ->setTitle($row['title'])
+               ->setSlug($row['slug'])
+               ->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
                ->setImageBag($imageBag);
 
         return $entity;

@@ -74,6 +74,8 @@ final class Module extends AbstractCmsModule
      */
     public function getServiceProviders()
     {
+        $webPageManager = $this->getWebPageManager();
+
         // Mappers
         $roomMapper = $this->getMapper('/Hotel/Storage/MySQL/RoomMapper');
         $bookingMapper = $this->getMapper('/Hotel/Storage/MySQL/BookingMapper');
@@ -82,7 +84,7 @@ final class Module extends AbstractCmsModule
 
         return [
             'bookingService' => new BookingService($bookingMapper, $bookingGuestMapper),
-            'roomService' => new RoomService($roomMapper, $this->createImageManager()),
+            'roomService' => new RoomService($roomMapper, $this->createImageManager(), $webPageManager),
             'galleryService' => new GalleryService($galleryMapper, $this->createGalleryImageManager())
         ];
     }
