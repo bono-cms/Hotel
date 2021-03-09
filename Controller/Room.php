@@ -90,6 +90,10 @@ final class Room extends AbstractController
                  ->setMetaDescription(null);
 
             return $this->view->render('hotel-rooms', [
+                // Query parameters
+                'checkin' => $checkin,
+                'checkout' => $checkout,
+                'criteria' => $criteria,
                 'duration' => BookingService::getDuration($checkin, $checkout),
                 'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
                 'rooms' => $this->getModuleService('roomService')->search($checkin, $checkout, $criteria),
