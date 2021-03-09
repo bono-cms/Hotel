@@ -35,7 +35,16 @@ final class Room extends AbstractController
             // Append gallery
             $room->setGallery($this->getModuleService('galleryService')->fetchAll($id));
 
+            // Query parameters
+            $checkin = $this->request->getQuery('checkin');
+            $checkout = $this->request->getQuery('checkout');
+            $criteria = $this->request->getQuery('criteria', [['adults' => 1]]);
+
             return $this->view->render('hotel-room', [
+                // Query parameters
+                'checkin' => $checkin,
+                'checkout' => $checkout,
+                'criteria' => $criteria,
                 'page' => $room,
                 'room' => $room,
                 'languages' => $roomService->getSwitchUrls($id)
