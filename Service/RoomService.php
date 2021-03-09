@@ -119,7 +119,7 @@ final class RoomService extends AbstractManager
      */
     public function search($checkin, $checkout, array $criteria)
     {
-        return $this->roomMapper->search($checkin, $checkout, $criteria);
+        return $this->prepareResults($this->roomMapper->search($checkin, $checkout, $criteria));
     }
 
     /**

@@ -77,14 +77,11 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
     {
         $langId = $this->getLangId();
 
-        // Generate single SELECT query and returns query string
-        $singleQuery = function($adults, $children) use ($checkin, $checkout, $langId){
-            // Columns to be selected
-            $columns = [
-                RoomMapper::column('price'),
-                RoomTranslationMapper::column('name')
-            ];
+        // Columns to be selected
+        $columns = $this->getColumns();
 
+        // Generate single SELECT query and returns query string
+        $singleQuery = function($adults, $children) use ($checkin, $checkout, $langId, $columns){
             $qb = new QueryBuilder();
             $qb->select($columns)
             ->count(BookingMapper::column('room_id'), 'countReservation')
@@ -93,6 +90,11 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             ->leftJoin(RoomTranslationMapper::getTableName(), [
                 RoomTranslationMapper::column('id') => RoomMapper::column('id'),
                 RoomTranslationMapper::column('lang_id') => $langId
+            ])
+            // Web page mapper
+            ->leftJoin(WebPageMapper::getTableName(), [
+                WebPageMapper::column('id') => RoomTranslationMapper::column('web_page_id'),
+                WebPageMapper::column('lang_id') => RoomTranslationMapper::column('lang_id')
             ])
             // Booking
             ->leftJoin(BookingMapper::getTableName(), [
@@ -106,10 +108,15 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             ->compare(BookingMapper::column('checkout'), '>=', "'$checkout'")
             ->closeBracket()
             // Capacity constraints
-            ->where(RoomMapper::column('adults'), '>=', $adults)
-            ->andWhere(RoomMapper::column('children'), '>=', $children)
-            ->groupBy($columns)
-            ->append(' HAVING countReservation = 0 ');
+            ->where(RoomMapper::column('adults'), '>=', $adults);
+
+            // Apply children count if provided
+            if ($children) {
+                $qb->andWhere(RoomMapper::column('children'), '>=', $children);
+            }
+
+            $qb->groupBy($columns)
+               ->append(' HAVING countReservation = 0 ');
 
             return $qb->getQueryString();
         };
@@ -126,7 +133,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
         $i = 0;
 
         foreach ($criteria as $param) {
-            $query = $singleQuery($param['adults'], $param['children']);
+            $query = $singleQuery($param['adults'], isset($param['children']) ? $param['children'] : null);
 
             $qb->openBracket()
                ->append($query)
