@@ -20,8 +20,8 @@ CREATE TABLE `bono_module_hotel_rooms_translations` (
 
     /* SEO */
     `title` varchar(255) NOT NULL COMMENT 'SEO: Title',
-    `meta_description` NOT NULL COMMENT 'SEO: Meta description',
-    `keywords` NOT NULL COMMENT 'SEO: Keywords',
+    `meta_description` TEXT NOT NULL COMMENT 'SEO: Meta description',
+    `keywords` TEXT NOT NULL COMMENT 'SEO: Keywords',
 
     FOREIGN KEY (id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
