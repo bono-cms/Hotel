@@ -15,4 +15,23 @@ use Krystal\Stdlib\VirtualEntity;
 
 final class RoomEntity extends VirtualEntity
 {
+    /**
+     * Returns next URL on current room entity
+     * 
+     * @param string $checkin
+     * @param string $checkout
+     * @param array $criteria
+     * @return string
+     */
+    public function getNextUrl($checkin, $checkout, array $criteria = [])
+    {
+        // Query parameters
+        $query = [
+            'checkin' => $checkin,
+            'checkout' => $checkout,
+            'criteria' => $criteria
+        ];
+
+        return $this->getUrl() . '?' . http_build_query($query);
+    }
 }
