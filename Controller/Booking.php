@@ -82,7 +82,7 @@ final class Booking extends AbstractController
             $roomId = $this->request->getQuery('room_id');
             $checkin = $this->request->getQuery('checkin');
             $checkout = $this->request->getQuery('checkout');
-            $guests = $this->request->getQuery('guests', 0);
+            $guests = BookingService::getGuestCountFromCriteria($this->request->getQuery('criteria'));
 
             // Find room by its ID
             $room = $this->getModuleService('roomService')->fetchById($roomId, false);
