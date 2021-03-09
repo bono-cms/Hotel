@@ -11,7 +11,6 @@
 
 namespace Hotel\Service;
 
-use Krystal\Stdlib\VirtualEntity;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Hotel\Storage\RoomMapperInterface;
 use Cms\Service\AbstractManager;
@@ -64,7 +63,7 @@ final class RoomService extends AbstractManager
         $imageBag->setId($row['id'])
                  ->setCover($row['cover']);
 
-        $entity = new VirtualEntity();
+        $entity = new RoomEntity();
         $entity->setId($row['id'])
                ->setLangId($row['lang_id'])
                ->setWebPageId($row['web_page_id'])
