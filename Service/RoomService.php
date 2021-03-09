@@ -79,6 +79,8 @@ final class RoomService extends AbstractManager
                ->setKeywords($row['keywords'])
                ->setTitle($row['title'])
                ->setSlug($row['slug'])
+               ->setChangeFreq($row['changefreq'])
+               ->setPriority($row['priority'])
                ->setUrl($this->webPageManager->surround($entity->getSlug(), $entity->getLangId()))
                ->setImageBag($imageBag);
 
