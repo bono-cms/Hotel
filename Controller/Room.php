@@ -12,6 +12,7 @@
 namespace Hotel\Controller;
 
 use Site\Controller\AbstractController;
+use Krystal\Stdlib\VirtualEntity;
 
 final class Room extends AbstractController
 {
@@ -69,11 +70,11 @@ final class Room extends AbstractController
      */
     public function searchAction()
     {
-        if ($this->request->hasQuery('checkin', 'checkout', 'criteria')) {
+        if ($this->request->hasQuery('checkin', 'checkout')) {
             // Query parameters
             $checkin = $this->request->getQuery('checkin');
             $checkout = $this->request->getQuery('checkout');
-            $criteria = $this->request->getQuery('criteria');
+            $criteria = $this->request->getQuery('criteria', [['adults' => 1]]);
 
             $this->loadSitePlugins();
             $this->view->getBreadcrumbBag()
@@ -87,7 +88,7 @@ final class Room extends AbstractController
                  ->setName($title)
                  ->setMetaDescription(null);
 
-            return $this->view->render('rooms', [
+            return $this->view->render('hotel-rooms', [
                 'languages' => $this->getService('Cms', 'languageManager')->fetchAll(true),
                 'rooms' => $this->getModuleService('roomService')->search($checkin, $checkout, $criteria),
                 'page' => $page
