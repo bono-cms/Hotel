@@ -72,13 +72,13 @@ final class BookingService extends AbstractManager
      */
     public static function getDuration($checkin, $checkout)
     {
-        $date = new DateTime($checkin);
-        $date->setTime(0, 0, 0);
+        $start = new DateTime($checkin);
+        $start->setTime(0, 0, 0);
 
-        $now = new DateTime($checkout);
-        $now->setTime(0, 0, 0);
+        $end = new DateTime($checkout);
+        $end->setTime(0, 0, 0);
 
-        $interval = $now->diff($date);
+        $interval = $end->diff($start);
 
         return $interval->d;
     }
