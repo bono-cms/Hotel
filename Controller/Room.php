@@ -27,7 +27,11 @@ final class Room extends AbstractController
         $room = $roomService->fetchById($id, false);
 
         if ($room) {
+            // Load site plugins
             $this->loadSitePlugins();
+
+            // Append gallery
+            $room->setGallery($this->getModuleService('galleryService')->fetchAll($id));
 
             return $this->view->render('hotel-room', [
                 'page' => $room,
