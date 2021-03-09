@@ -58,6 +58,10 @@ use Cms\View\Icon;
 
             'actions' => [
                 function($room){
+                    return Icon::view($room->getUrl(), $this->translate('View this room on the site'));
+                },
+
+                function($room){
                     return Icon::edit(
                         $this->url('Hotel:Admin:Room@editAction', $room->getId()),
                         $this->translate('Edit this room')
