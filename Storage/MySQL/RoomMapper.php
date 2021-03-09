@@ -13,6 +13,7 @@ namespace Hotel\Storage\MySQL;
 
 use Krystal\Db\Sql\QueryBuilder;
 use Cms\Storage\MySQL\AbstractMapper;
+use Cms\Storage\MySQL\WebPageMapper;
 use Hotel\Storage\RoomMapperInterface;
 
 final class RoomMapper extends AbstractMapper implements RoomMapperInterface
@@ -46,13 +47,20 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             self::column('adults'),
             self::column('children'),
             self::column('cover'),
+
+            // Translations
             RoomTranslationMapper::column('web_page_id'),
             RoomTranslationMapper::column('lang_id'),
             RoomTranslationMapper::column('name'),
             RoomTranslationMapper::column('description'),
             RoomTranslationMapper::column('meta_description'),
             RoomTranslationMapper::column('keywords'),
-            RoomTranslationMapper::column('title')
+            RoomTranslationMapper::column('title'),
+
+            // Web page
+            WebPageMapper::column('slug'),
+            WebPageMapper::column('changefreq'),
+            WebPageMapper::column('priority'),
         ];
     }
 
