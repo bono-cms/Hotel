@@ -17,6 +17,7 @@ CREATE TABLE `bono_module_hotel_rooms_translations` (
 	`web_page_id` INT NOT NULL COMMENT 'Attached Web Page Id',
     `name` varchar(254) NOT NULL COMMENT 'Room name',
     `description` TEXT NOT NULL COMMENT 'Room description',
+    `full` TEXT NOT NULL COMMENT 'Full description',
 
     /* SEO */
     `title` varchar(255) NOT NULL COMMENT 'SEO: Title',

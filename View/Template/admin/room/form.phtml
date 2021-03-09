@@ -33,6 +33,7 @@ defined('KRYSTAL') or die;
                     <?= $this->field()->hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
 
                     <?= $this->field('Name')->text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
+                    <?= $this->field('Full description')->textarea(sprintf('translation[%s][full]', $language->getId()), $entity->getFull(), ['class' => 'form-control']); ?>
                     <?= $this->field('Description')->textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
 
                     <div class="options">

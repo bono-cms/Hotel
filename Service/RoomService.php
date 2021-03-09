@@ -74,6 +74,7 @@ final class RoomService extends AbstractManager
                ->setCover($row['cover'])
                ->setName($row['name'])
                ->setDescription($row['description'])
+               ->setFull($row['full'])
                // SEO
                ->setMetaDescription($row['meta_description'])
                ->setKeywords($row['keywords'])

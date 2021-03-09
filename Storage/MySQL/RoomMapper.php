@@ -52,6 +52,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             RoomTranslationMapper::column('web_page_id'),
             RoomTranslationMapper::column('lang_id'),
             RoomTranslationMapper::column('name'),
+            RoomTranslationMapper::column('full'),
             RoomTranslationMapper::column('description'),
             RoomTranslationMapper::column('meta_description'),
             RoomTranslationMapper::column('keywords'),

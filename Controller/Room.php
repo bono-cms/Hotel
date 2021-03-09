@@ -45,7 +45,7 @@ final class Room extends AbstractController
     }
 
     /**
-     * Checks whether a room is availble on given dates
+     * Checks whether a room is available on given dates
      * 
      * @return string
      */
