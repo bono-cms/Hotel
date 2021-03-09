@@ -159,8 +159,8 @@ final class RoomService extends AbstractManager
     /**
      * Saves a room
      * 
-     * @param array $input
-     * @return boolean
+     * @param array $input Raw input data
+     * @return boolean Depending on success
      */
     public function save(array $input)
     {
@@ -171,9 +171,14 @@ final class RoomService extends AbstractManager
             // If there's a file, then it needs to uploaded as a cover
             $data['room']['cover'] = $file ? $file->getUniqueName() : '';
 
-            if ($file && $this->galleryMapper->persist($data['room'])) {
-                return $this->roomMapper->savePage('Hotel', 'Hotel:Room@indexAction', $data['room'], $data['translation']);
+            // Do save
+            $this->roomMapper->savePage('Hotel', 'Hotel:Room@indexAction', $data['room'], $data['translation']);
+
+            if ($file) {
+                $this->imageManager->upload($this->getLastId(), $file);
             }
+
+            return true;
 
         } else { // Update
             if ($file) {
