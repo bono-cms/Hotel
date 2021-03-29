@@ -121,6 +121,7 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
                             RoomTranslationMapper::column('id') => RoomMapper::getRawColumn('id'),
                             RoomTranslationMapper::column('lang_id') => $this->getLangId()
                         ])
+                       ->whereEquals(self::column('status'), BookingStatusCollection::STATUS_CONFIRMED)
                        ->orderBy(self::column('id'))
                        ->desc();
 
