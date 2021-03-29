@@ -42,6 +42,10 @@ final class Booking extends AbstractController
      */
     private function createForm(VirtualEntity $booking, $title, $guests = [])
     {
+        // Load view plugins
+        $this->view->getPluginBag()
+                   ->load(['datepicker']);
+
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Hotel', 'Hotel:Admin:Room@indexAction')
                                        ->addOne('Bookings', 'Hotel:Admin:Booking@indexAction')
