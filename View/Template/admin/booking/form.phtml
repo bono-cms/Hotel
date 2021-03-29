@@ -5,6 +5,7 @@ use Krystal\Widget\GridView\GridViewWidget;
 ?>
 
 <div class="card">
+    <?php if ($booking->getId()): ?>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -15,10 +16,13 @@ use Krystal\Widget\GridView\GridViewWidget;
             <a class="nav-link" data-toggle="tab" href="#booking-guest"><i class="fas fa-user"></i> <?= $this->translate('Guests'); ?> <small class="text-muted">(<?= count($guests); ?>)</small></a>
         </li>
     </ul>
+    <?php endif; ?>
 
+    <?php if ($booking->getId()): ?>
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane container active" id="booking-details">
+    <?php endif; ?>
             <form data-group="booking" autocomplete="off">
                 <?= $this->field()->hidden('booking[id]', $booking->getId()); ?>
                 <?= $this->field()->hidden('booking[token]', $booking->getToken()); ?>
@@ -30,7 +34,7 @@ use Krystal\Widget\GridView\GridViewWidget;
                 <?= $this->field('Check-in')->text('booking[checkin]', $booking->getCheckin(), ['class' => 'form-control']); ?>
                 <?= $this->field('Check-out')->text('booking[checkout]', $booking->getCheckout(), ['class' => 'form-control']); ?>
                 <?= $this->field('Comment')->textarea('booking[comment]', $booking->getComment(), ['class' => 'form-control', 'rows' => 4]); ?>
-                
+
                 <?php $this->loadPartial('actions', [
                     'new' => !$booking->getId(),
                     'add' => 'Hotel:Admin:Booking@addAction',
@@ -39,6 +43,8 @@ use Krystal\Widget\GridView\GridViewWidget;
                     'cancel' => 'Hotel:Admin:Booking@indexAction'
                 ]); ?>
             </form>
+        
+        <?php if ($booking->getId()): ?>
         </div>
 
         <div class="tab-pane container fade" id="booking-guest">
@@ -59,4 +65,5 @@ use Krystal\Widget\GridView\GridViewWidget;
             ])); ?>
         </div>
     </div>
+        <?php endif; ?>
 </div>
