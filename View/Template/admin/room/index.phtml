@@ -12,7 +12,7 @@ use Cms\View\Icon;
     </div>
 
     <div class="btn-group mr-2">
-        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Booking@indexAction'); ?>"><i class="fas fa-calendar-alt"></i> <?php $this->show('View all bookings'); ?></a>
+        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Booking@indexAction'); ?>"><i class="fas fa-calendar-alt"></i> <?php $this->show('View all bookings'); ?> <small>(<?= $bookingCount; ?>)</small></a>
     </div>
 </div>
 

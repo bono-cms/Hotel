@@ -27,6 +27,7 @@ final class Room extends AbstractController
         $this->view->getBreadcrumbBag()->addOne('Hotel');
 
         return $this->view->render('room/index', [
+            'bookingCount' => $this->getModuleService('bookingService')->countAll(),
             'currency' => 'USD',
             'rooms' => $this->getModuleService('roomService')->fetchAll()
         ]);
