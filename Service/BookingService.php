@@ -109,6 +109,16 @@ final class BookingService extends AbstractManager
     }
 
     /**
+     * Count all confirmed booking items
+     * 
+     * @return int
+     */
+    public function countAll()
+    {
+        return $this->bookingMapper->countAll();
+    }
+
+    /**
      * Checks whether a single room is available at given dates
      * 
      * @param int $roomId

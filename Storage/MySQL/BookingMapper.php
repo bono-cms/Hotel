@@ -27,6 +27,21 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
     }
 
     /**
+     * Count all confirmed booking items
+     * 
+     * @return int
+     */
+    public function countAll()
+    {
+        $db = $this->db->select()
+                       ->count('id')
+                       ->from(self::getTableName())
+                       ->whereEquals('status', BookingStatusCollection::STATUS_CONFIRMED);
+
+        return $db->queryScalar();
+    }
+
+    /**
      * Confirms booking by a token
      * 
      * @param string $token

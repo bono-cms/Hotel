@@ -14,6 +14,13 @@ namespace Hotel\Storage;
 interface BookingMapperInterface
 {
     /**
+     * Count all confirmed booking items
+     * 
+     * @return int
+     */
+    public function countAll();
+
+    /**
      * Checks whether a single room is available at given dates
      * 
      * @param int $roomId
