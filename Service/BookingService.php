@@ -55,6 +55,20 @@ final class BookingService extends AbstractManager
      * @param array $criteria
      * @return int
      */
+    public static function getCriteriaCount(array $criteria)
+    {
+        return [
+            'adults' => array_sum(array_column($criteria, 'adults')),
+            'children' => array_sum(array_column($criteria, 'children'))
+        ];
+    }
+
+    /**
+     * Gets guest count from criteria
+     * 
+     * @param array $criteria
+     * @return int
+     */
     public static function getGuestCountFromCriteria(array $criteria)
     {
         $adults = array_column($criteria, 'adults');
