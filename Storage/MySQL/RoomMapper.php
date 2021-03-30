@@ -15,6 +15,7 @@ use Krystal\Db\Sql\QueryBuilder;
 use Cms\Storage\MySQL\AbstractMapper;
 use Cms\Storage\MySQL\WebPageMapper;
 use Hotel\Storage\RoomMapperInterface;
+use Hotel\Collection\BookingStatusCollection;
 
 final class RoomMapper extends AbstractMapper implements RoomMapperInterface
 {
@@ -99,6 +100,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             // Booking
             ->leftJoin(BookingMapper::getTableName(), [
                 BookingMapper::column('room_id') => RoomMapper::column('id')
+                BookingMapper::column('status') => BookingStatusCollection::STATUS_CONFIRMED
             ])
             ->rawAnd()
             // Date filtering condition
