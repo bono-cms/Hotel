@@ -113,7 +113,8 @@ final class BookingService extends AbstractManager
                ->setStatus($row['status'])
                ->setEmail($row['email'])
                ->setPhone($row['phone'])
-               ->setComment($row['comment']);
+               ->setComment($row['comment'])
+               ->setToken($row['token']);
 
         if (isset($row['room'])) {
             $entity->setRoom($row['room']);
