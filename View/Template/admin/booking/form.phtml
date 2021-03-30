@@ -27,6 +27,7 @@ use Krystal\Widget\GridView\GridViewWidget;
                 <?= $this->field()->hidden('booking[id]', $booking->getId()); ?>
                 <?= $this->field()->hidden('booking[token]', $booking->getToken()); ?>
 
+                <?= $this->field('Room')->select('booking[room_id]', $rooms, $booking->getRoomId(), ['class' => 'form-control']); ?>
                 <?= $this->field('Client')->text('booking[client]', $booking->getClient(), ['class' => 'form-control']); ?>
                 <?= $this->field('Email')->text('booking[email]', $booking->getEmail(), ['class' => 'form-control']); ?>
                 <?= $this->field('Phone')->text('booking[phone]', $booking->getPhone(), ['class' => 'form-control']); ?>

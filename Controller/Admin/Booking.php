@@ -53,7 +53,8 @@ final class Booking extends AbstractController
 
         return $this->view->render('booking/form', [
             'booking' => $booking,
-            'guests' => $guests
+            'guests' => $guests,
+            'rooms' => $this->getModuleService('roomService')->fetchList()
         ]);
     }
 
