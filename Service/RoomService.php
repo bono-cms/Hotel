@@ -11,6 +11,7 @@
 
 namespace Hotel\Service;
 
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Hotel\Storage\RoomMapperInterface;
 use Cms\Service\AbstractManager;
@@ -135,6 +136,16 @@ final class RoomService extends AbstractManager
         } else {
             return $this->prepareResult($this->roomMapper->fetchById($id, false));
         }
+    }
+
+    /**
+     * Fetch list of rooms
+     * 
+     * @return array
+     */
+    public function fetchList()
+    {
+        return ArrayUtils::arrayList($this->roomMapper->fetchList(), 'id', 'name');
     }
 
     /**

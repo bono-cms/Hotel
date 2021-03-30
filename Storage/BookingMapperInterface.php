@@ -47,6 +47,13 @@ interface BookingMapperInterface
     public function fetchByToken($token);
 
     /**
+     * Fetch list of rooms
+     * 
+     * @return array
+     */
+    public function fetchList();
+
+    /**
      * Fetch all booking entries
      * 
      * @return array

@@ -87,6 +87,29 @@ final class BookingMapper extends AbstractMapper implements BookingMapperInterfa
     }
 
     /**
+     * Fetch list of rooms
+     * 
+     * @return array
+     */
+    public function fetchList()
+    {
+        // To be selected
+        $columns = [
+            self::column('id'),
+            RoomTranslationMapper::column('name')
+        ];
+
+        $db = $this->createEntitySelect($columns)
+                    // Language ID constraint
+                   ->whereEquals(RoomTranslationMapper::column('lang_id'), $this->getLangId());
+
+        $db->orderBy(self::column('id'))
+           ->desc();
+
+        return $db->queryAll();
+    }
+
+    /**
      * Fetch all booking entries
      * 
      * @return array
