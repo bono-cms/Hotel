@@ -19,6 +19,7 @@ use Cms\Service\AbstractManager;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Date\TimeHelper;
 use Krystal\Text\TextUtils;
+use Krystal\Stdlib\ArrayUtils;
 
 final class BookingService extends AbstractManager
 {
@@ -98,6 +99,27 @@ final class BookingService extends AbstractManager
     }
 
     /**
+     * Returns arrival time
+     * 
+     * @return array
+     */
+    public static function getArrivalTime()
+    {
+        return ArrayUtils::valuefy([
+            '14:00 - 15:00',
+            '15:00 - 16:00',
+            '16:00 - 17:00',
+            '17:00 - 18:00',
+            '18:00 - 19:00',
+            '19:00 - 20:00',
+            '20:00 - 21:00',
+            '21:00 - 22:00',
+            '22:00 - 23:00',
+            '23:00 - 00:00'
+        ]);
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function toEntity(array $row)
@@ -114,7 +136,10 @@ final class BookingService extends AbstractManager
                ->setEmail($row['email'])
                ->setPhone($row['phone'])
                ->setComment($row['comment'])
-               ->setToken($row['token']);
+               ->setToken($row['token'])
+               ->setIndex($row['index'])
+               ->setAddress($row['address'])
+               ->setArrival($row['arrival']);
 
         if (isset($row['room'])) {
             $entity->setRoom($row['room']);
