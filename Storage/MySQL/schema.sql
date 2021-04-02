@@ -50,6 +50,11 @@ CREATE TABLE `bono_module_hotel_rooms_booking` (
     `status` TINYINT NOT NULL COMMENT 'Booking status constant',
     `token` varchar(32) NOT NULL COMMENT 'Booking token',
 
+    /* Extra details */
+    `index` varchar(255) DEFAULT NULL COMMENT 'Postal code',
+    `address` varchar(255) DEFAULT NULL COMMENT 'Full address',
+    `arrival` varchar(12) DEFAULT NULL COMMENT 'Approximate arrival time',
+
     FOREIGN KEY (room_id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE
 
 ) ENGINE = InnoDB DEFAULT CHARSET = UTF8;

@@ -34,6 +34,9 @@ use Krystal\Widget\GridView\GridViewWidget;
                 <?= $this->field('Amount')->text('booking[amount]', $booking->getAmount(), ['class' => 'form-control']); ?>
                 <?= $this->field('Check-in')->text('booking[checkin]', $booking->getCheckin(), ['class' => 'form-control', 'data-plugin' => 'datepicker']); ?>
                 <?= $this->field('Check-out')->text('booking[checkout]', $booking->getCheckout(), ['class' => 'form-control', 'data-plugin' => 'datepicker']); ?>
+                <?= $this->field('Arrival time')->text('booking[arrival]', $booking->getArrival(), ['class' => 'form-control']); ?>
+                <?= $this->field('Postal code')->text('booking[index]', $booking->getIndex(), ['class' => 'form-control']); ?>
+                <?= $this->field('Address')->text('booking[address]', $booking->getAddress(), ['class' => 'form-control']); ?>
                 <?= $this->field('Comment')->textarea('booking[comment]', $booking->getComment(), ['class' => 'form-control', 'rows' => 4]); ?>
 
                 <?php $this->loadPartial('actions', [
