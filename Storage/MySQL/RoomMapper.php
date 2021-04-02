@@ -99,7 +99,7 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
             ])
             // Booking
             ->leftJoin(BookingMapper::getTableName(), [
-                BookingMapper::column('room_id') => RoomMapper::column('id')
+                BookingMapper::column('room_id') => RoomMapper::column('id'),
                 BookingMapper::column('status') => BookingStatusCollection::STATUS_CONFIRMED
             ])
             ->rawAnd()
