@@ -186,4 +186,26 @@ final class RoomMapper extends AbstractMapper implements RoomMapperInterface
 
         return $db->queryAll();
     }
+
+    /**
+     * Fetch list of rooms
+     * 
+     * @return array
+     */
+    public function fetchList()
+    {
+        $columns = [
+            self::column('id'),
+            RoomTranslationMapper::column('name')
+        ];
+
+        $db = $this->createWebPageSelect($columns)
+                    // Language ID constraint
+                   ->whereEquals(RoomTranslationMapper::column('lang_id'), $this->getLangId());
+
+        $db->orderBy(self::column('id'))
+           ->desc();
+
+        return $db->queryAll();
+    }    
 }

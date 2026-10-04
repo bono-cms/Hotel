@@ -27,4 +27,11 @@ interface RoomMapperInterface
      * @return array
      */
     public function fetchAll();
+
+    /**
+     * Fetch list of rooms
+     * 
+     * @return array
+     */
+    public function fetchList();
 }
