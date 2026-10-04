@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -83,7 +81,9 @@ final class Gallery extends AbstractController
     {
         if ($this->getModuleService('galleryService')->deleteById($id)) {
             $this->flashBag->set('success', 'Selected image has been removed successfully');
-            return 1;
+            return $this->json([
+                'refresh' => true
+            ]);
         }
     }
 
@@ -94,14 +94,38 @@ final class Gallery extends AbstractController
      */
     public function saveAction()
     {
-        $galleryService = $this->getModuleService('galleryService');
-        
-        $input = $this->request->getAll();
-        $id = $input['data']['image']['id'];
+        $validator = $this->createValidation();
 
-        $galleryService->save($input);
-        $this->flashBag->set('success', $id ? 'Image has been updated successfully' : 'Image has been uploaded successfully');
+        $validator->field('image.room_id')
+                  ->required();
 
-        return $id ? 1 : $galleryService->getLastId();
+        $validator->field('image.order')
+                  ->addRule('integer');
+
+        // File is required only on creation (when id is empty)
+        $validator->file('image.file')
+                  ->required(null, empty($this->request->getPost('data')['image']['id']))
+                  ->addRule('image');
+
+        if ($validator->isPassed()) {
+            $galleryService = $this->getModuleService('galleryService');
+
+            $input = $this->request->getAll();
+            $id = $input['data']['image']['id'];
+
+            $galleryService->save($input);
+            $this->flashBag->set('success', $id ? 'Image has been updated successfully' : 'Image has been uploaded successfully');
+
+            return $id ? $this->json([
+                'refresh' => true
+            ]) : $this->json([
+                'redirect' => $this->createUrl('Hotel:Admin:Gallery@editAction', [$galleryService->getLastId()]),
+            ]);
+
+        } else {
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
+        }
     }
 }

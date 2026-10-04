@@ -1,10 +1,23 @@
+<?php
+
+use Krystal\Form\Element;
+
+defined('KRYSTAL') or die;
+
+?>
+
 <form class="card" data-group="image" autocomplete="off">
     <!-- Relational fields -->
-    <?= $this->field()->hidden('image[id]', $image->getId()); ?>
-    <?= $this->field()->hidden('image[room_id]', $image->getRoomId()); ?>
+    <?= Element::hidden('image[id]', $image->getId()); ?>
+    <?= Element::hidden('image[room_id]', $image->getRoomId()); ?>
 
     <!-- Image data -->
-    <?= $this->field('Sorting order')->number('image[order]', $image->getOrder(), ['class' => 'form-control']); ?>
+    <div class="form-group row mb-3">
+        <label class="col-lg-2 col-form-label"><?= $this->translate('Sorting order'); ?></label>
+        <div class="col-lg-10">
+            <?= Element::number('image[order]', $image->getOrder(), ['class' => 'form-control']); ?>
+        </div>
+    </div>
 
     <?php if ($image->getFile()): ?>
     <p>
@@ -12,7 +25,12 @@
     </p>
     <?php endif; ?>
 
-    <?= $this->field('File')->fileData('image[file]', $image->getFile(), 'image/*', ['class' => 'form-control']); ?>
+    <div class="form-group row mb-3">
+        <label class="col-lg-2 col-form-label"><?= $this->translate('File'); ?></label>
+        <div class="col-lg-10">
+            <?= Element::file('image[file]', 'image/*', ['class' => 'form-control']); ?>
+        </div>
+    </div>
 
     <?php $this->loadPartial('actions', [
         'new' => !$image->getId(),

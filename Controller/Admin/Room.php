@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -94,7 +92,9 @@ final class Room extends AbstractController
         $this->getModuleService('roomService')->deleteById($id);
 
         $this->flashBag->set('success', 'The room has been deleted successfully');
-        return 1;
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -104,16 +104,58 @@ final class Room extends AbstractController
      */
     public function saveAction()
     {
-        $input = $this->request->getAll();
+        $validator = $this->createValidation();
 
-        $isNew = empty($input['data']['room']['id']);
-        $roomService = $this->getModuleService('roomService');
+        $validator->field('room.price')
+                  ->required()
+                  ->addRule('numeric')
+                  ->addRule('greaterthan', null, ['min' => 0]);
 
-        if ($roomService->save($input)) {
-            // Flash message
-            $this->flashBag->set('success', $isNew ? 'The room has been added successfully' : 'The room has been updated successfully');
+        $validator->field('room.adults')
+                  ->required()
+                  ->addRule('integer')
+                  ->addRule('greaterthan', null, ['min' => 0]);
 
-            return $isNew ? $roomService->getLastId() : 1;
+        $validator->field('room.children')
+                  ->required()
+                  ->addRule('integer')
+                  ->addRule('lessorequal', null, ['max' => 100]);
+
+        // Every translation's name is required
+        $validator->field('translation.*.name')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 2]);
+
+        // Every translation's description is required
+        $validator->field('translation.*.description')
+                  ->required();
+
+        // Cover file is required only on creation (when id is empty)
+        $validator->file('room.cover')
+                  ->required(null, empty($this->request->getPost('room')['id']))
+                  ->addRule('image');
+
+        if ($validator->isPassed()) {
+            $input = $this->request->getAll();
+
+            $isNew = empty($input['data']['room']['id']);
+            $roomService = $this->getModuleService('roomService');
+
+            if ($roomService->save($input)) {
+                // Flash message
+                $this->flashBag->set('success', $isNew ? 'The room has been added successfully' : 'The room has been updated successfully');
+
+                return $isNew ? $this->json([
+                    'redirect' => $this->createUrl('Hotel:Admin:Room@editAction', [$roomService->getLastId()]),
+                ]) : $this->json([
+                    'refresh' => true
+                ]);
+            }
+
+        } else {
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
         }
     }
 }

@@ -28,17 +28,34 @@ defined('KRYSTAL') or die;
                     <?php $entity = LanguageManager::findByLangId($language->getId(), $room); ?>
                     <?php $this->loadPartial('language-name', array('language' => $language)); ?>
 
-                    <?= $this->field()->hidden(sprintf('translation[%s][id]', $language->getId()), $entity->getId()); ?>
-                    <?= $this->field()->hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
-                    <?= $this->field()->hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
+                    <?= Element::hidden(sprintf('translation[%s][id]', $language->getId()), $entity->getId()); ?>
+                    <?= Element::hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
+                    <?= Element::hidden(sprintf('translation[%s][web_page_id]', $language->getId()), $entity->getWebPageId()); ?>
 
-                    <?= $this->field('Name')->text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
-                    <?= $this->field('Full description')->textarea(sprintf('translation[%s][full]', $language->getId()), $entity->getFull(), ['class' => 'form-control']); ?>
-                    <?= $this->field('Description')->textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
+                    <div class="form-group row mb-3">
+                        <label class="col-lg-2 col-form-label"><?= $this->translate('Name'); ?></label>
+                        <div class="col-lg-10">
+                            <?= Element::text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), ['class' => 'form-control']); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-lg-2 col-form-label"><?= $this->translate('Full description'); ?></label>
+                        <div class="col-lg-10">
+                            <?= Element::textarea(sprintf('translation[%s][full]', $language->getId()), $entity->getFull(), ['class' => 'form-control']); ?>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-3">
+                        <label class="col-lg-2 col-form-label"><?= $this->translate('Description'); ?></label>
+                        <div class="col-lg-10">
+                            <?= Element::textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), ['class' => 'form-control']); ?>
+                        </div>
+                    </div>
 
                     <div class="options">
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label"><?php $this->show('Slug'); ?></label>
+                        <div class="form-group row mb-3">
+                            <label class="col-lg-2 col-form-label"><?= $this->translate('Slug'); ?></label>
                             <div class="col-lg-10">
                                 <div class="input-group">
                                     <?php echo Element::text(sprintf('translation[%s][slug]', $language->getId()), $entity->getSlug(), array('class' => 'form-control', 'placeholder' => $this->translate('URL slug for this room. By default is taken from the name'))); ?>
@@ -50,11 +67,22 @@ defined('KRYSTAL') or die;
                             </div>
                         </div>
 
-                        <?= $this->field('Change frequency')->select(sprintf('translation[%s][changefreq]', $language->getId()), $this->translateArray($changeFreqs), $entity->getChangeFreq(), ['class' => 'form-control']); ?>
-                        <?= $this->field('Priority')->select(sprintf('translation[%s][priority]', $language->getId()), $priorities, $entity->getPriority(), ['class' => 'form-control']); ?>
+                        <div class="form-group row mb-3">
+                            <label class="col-lg-2 col-form-label"><?= $this->translate('Change frequency'); ?></label>
+                            <div class="col-lg-10">
+                                <?= Element::select(sprintf('translation[%s][changefreq]', $language->getId()), $this->translateArray($changeFreqs), $entity->getChangeFreq(), ['class' => 'form-control']); ?>
+                            </div>
+                        </div>
 
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+                        <div class="form-group row mb-3">
+                            <label class="col-lg-2 col-form-label"><?= $this->translate('Priority'); ?></label>
+                            <div class="col-lg-10">
+                                <?= Element::select(sprintf('translation[%s][priority]', $language->getId()), $priorities, $entity->getPriority(), ['class' => 'form-control']); ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-lg-2 col-form-label"><?= $this->translate('Title'); ?></label>
                             <div class="col-lg-10">
                                 <div class="input-group">
                                     <?php echo Element::text(sprintf('translation[%s][title]', $language->getId()), $entity->getTitle(), array('class' => 'form-control', 'data-input' => 'title', 'placeholder' => $this->translate('Room title'))); ?>
@@ -63,8 +91,19 @@ defined('KRYSTAL') or die;
                             </div>
                         </div>
 
-                        <?= $this->field('Keywords')->text(sprintf('translation[%s][keywords]', $language->getId()), $entity->getKeywords(), ['class' => 'form-control', 'placeholder' => $this->translate('Keywords used for search engines')]); ?>
-                        <?= $this->field('Description')->textarea(sprintf('translation[%s][meta_description]', $language->getId()), $entity->getMetaDescription(), ['class' => 'form-control', 'placeholder' => $this->translate('Meta description for search engines')]); ?>
+                        <div class="form-group row mb-3">
+                            <label class="col-lg-2 col-form-label"><?= $this->translate('Keywords'); ?></label>
+                            <div class="col-lg-10">
+                                <?= Element::text(sprintf('translation[%s][keywords]', $language->getId()), $entity->getKeywords(), ['class' => 'form-control', 'placeholder' => $this->translate('Keywords used for search engines')]); ?>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label class="col-lg-2 col-form-label"><?= $this->translate('Description'); ?></label>
+                            <div class="col-lg-10">
+                                <?= Element::textarea(sprintf('translation[%s][meta_description]', $language->getId()), $entity->getMetaDescription(), ['class' => 'form-control', 'placeholder' => $this->translate('Meta description for search engines')]); ?>
+                            </div>
+                        </div>
                     </div>                    
                 </div>
                 <?php endforeach; ?>
@@ -72,10 +111,28 @@ defined('KRYSTAL') or die;
         </div>
 
         <div class="tab-pane fade" id="hotel-room-configuration" role="tabpanel">
-            <?= $this->field()->hidden('room[id]', $entity->getId()); ?>
-            <?= $this->field('Price per night')->number('room[price]', $entity->getPrice(), ['class' => 'form-control']); ?>
-            <?= $this->field('Maximal adults capacity')->number('room[adults]', $entity->getAdults(), ['class' => 'form-control', 'min' => 1]); ?>
-            <?= $this->field('Maximal children capacity')->number('room[children]', $entity->getChildren(), ['class' => 'form-control', 'min' => 0]); ?>
+            <?= Element::hidden('room[id]', $entity->getId()); ?>
+
+            <div class="form-group row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Price per night'); ?></label>
+                <div class="col-lg-10">
+                    <?= Element::number('room[price]', $entity->getPrice(), ['class' => 'form-control']); ?>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Maximal adults capacity'); ?></label>
+                <div class="col-lg-10">
+                    <?= Element::number('room[adults]', $entity->getAdults(), ['class' => 'form-control', 'min' => 1]); ?>
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Maximal children capacity'); ?></label>
+                <div class="col-lg-10">
+                    <?= Element::number('room[children]', $entity->getChildren(), ['class' => 'form-control', 'min' => 0]); ?>
+                </div>
+            </div>
 
             <?php if ($entity->getCover()): ?>
             <p>
@@ -83,7 +140,12 @@ defined('KRYSTAL') or die;
             </p>
             <?php endif; ?>
 
-            <?= $this->field('Room cover')->fileData('room[cover]', $entity->getCover(), 'image/*', ['class' => 'form-control']); ?>
+            <div class="form-group row mb-3">
+                <label class="col-lg-2 col-form-label"><?= $this->translate('Room cover'); ?></label>
+                <div class="col-lg-10">
+                    <?= Element::file('room[cover]', 'image/*', ['class' => 'form-control']); ?>
+                </div>
+            </div>
         </div>
 
         <?php if (!$new): ?>

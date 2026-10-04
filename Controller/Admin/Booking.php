@@ -3,8 +3,6 @@
 /**
  * This file is part of the Bono CMS
  * 
- * Copyright (c) No Global State Lab
- * 
  * For the full copyright and license information, please view
  * the license file that was distributed with this source code.
  */
@@ -98,7 +96,9 @@ final class Booking extends AbstractController
         $this->getModuleService('bookingService')->deleteById($id);
 
         $this->flashBag->set('success', 'Selected booking entry has been removed');
-        return 1;
+        return $this->json([
+            'refresh' => true
+        ]);
     }
 
     /**
@@ -108,14 +108,51 @@ final class Booking extends AbstractController
      */
     public function saveAction()
     {
-        $input = $this->request->getPost('booking');
-        $isNew = empty($input['id']);
+        $validator = $this->createValidation();
 
-        $bookingService = $this->getModuleService('bookingService');
-        $bookingService->save($input);
+        $validator->field('booking.room_id')
+                  ->required();
 
-        $this->flashBag->set('success', $isNew ? 'Booking entry has been created successfully' : 'Booking entry has been updated successfully');
+        $validator->field('booking.client')
+                  ->required()
+                  ->addRule('minlength', null, ['min' => 2]);
 
-        return !$isNew ? 1 : $bookingService->getLastId();
+        $validator->field('booking.email')
+                  ->required()
+                  ->addRule('email');
+
+        $validator->field('booking.phone')
+                  ->required();
+
+        $validator->field('booking.amount')
+                  ->required()
+                  ->addRule('numeric');
+
+        $validator->field('booking.checkin')
+                  ->required();
+
+        $validator->field('booking.checkout')
+                  ->required();
+
+        if ($validator->isPassed()) {
+            $input = $this->request->getPost('booking');
+            $isNew = empty($input['id']);
+
+            $bookingService = $this->getModuleService('bookingService');
+            $bookingService->save($input);
+
+            $this->flashBag->set('success', $isNew ? 'Booking entry has been created successfully' : 'Booking entry has been updated successfully');
+
+            return !$isNew ? $this->json([
+                'refresh' => true
+            ]) : $this->json([
+                'redirect' => $this->createUrl('Hotel:Admin:Booking@editAction', [$bookingService->getLastId()]),
+            ]);
+
+        } else {
+            return $this->json([
+                'errors' => $validator->getErrors()
+            ]);
+        }
     }
 }

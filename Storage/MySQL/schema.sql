@@ -7,7 +7,7 @@ CREATE TABLE `bono_module_hotel_rooms` (
     `adults` SMALLINT NOT NULL COMMENT 'Max.adult capacity',
     `children` SMALLINT NOT NULL COMMENT 'Max.children capacity',
     `cover` varchar(255) NOT NULL COMMENT 'Cover file'
-) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* Rooms localizations */
 DROP TABLE IF EXISTS `bono_module_hotel_rooms_translations`;
@@ -18,7 +18,6 @@ CREATE TABLE `bono_module_hotel_rooms_translations` (
     `name` varchar(254) NOT NULL COMMENT 'Room name',
     `description` TEXT NOT NULL COMMENT 'Room description',
     `full` TEXT NOT NULL COMMENT 'Full description',
-
     /* SEO */
     `title` varchar(255) NOT NULL COMMENT 'SEO: Title',
     `meta_description` TEXT NOT NULL COMMENT 'SEO: Meta description',
@@ -27,8 +26,7 @@ CREATE TABLE `bono_module_hotel_rooms_translations` (
     FOREIGN KEY (id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
     FOREIGN KEY (web_page_id) REFERENCES bono_module_cms_webpages(id) ON DELETE CASCADE
-
-) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* Rooms booking */
 DROP TABLE IF EXISTS `bono_module_hotel_rooms_booking`;
@@ -57,7 +55,7 @@ CREATE TABLE `bono_module_hotel_rooms_booking` (
 
     FOREIGN KEY (room_id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE
 
-) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* Booking guests */
 DROP TABLE IF EXISTS `bono_module_hotel_booking_guest`;
@@ -66,10 +64,9 @@ CREATE TABLE `bono_module_hotel_booking_guest` (
     `booking_id` INT NOT NULL COMMENT 'Attached booking ID',
     `client` varchar(255) NOT NULL,
     `email` varchar(255) COMMENT 'Optional email',
-
     FOREIGN KEY (booking_id) REFERENCES bono_module_hotel_rooms_booking(id) ON DELETE CASCADE
 
-) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /* Gallery */
 DROP TABLE IF EXISTS `bono_module_hotel_rooms_gallery`;
@@ -80,4 +77,4 @@ CREATE TABLE `bono_module_hotel_rooms_gallery` (
     `file` varchar(255) NOT NULL,
 
     FOREIGN KEY (room_id) REFERENCES bono_module_hotel_rooms(id) ON DELETE CASCADE
-) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
