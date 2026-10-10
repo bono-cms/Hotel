@@ -3,8 +3,6 @@
 use Krystal\Form\Element;
 use Krystal\Widget\GridView\GridViewWidget;
 
-defined('KRYSTAL') or die;
-
 ?>
 
 <div class="card">
@@ -12,11 +10,11 @@ defined('KRYSTAL') or die;
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#booking-details"><i class="fas fa-edit"></i> <?= $this->translate('Booking details'); ?></a>
+            <a class="nav-link active" data-bs-toggle="tab" href="#booking-details"><i class="fas fa-edit"></i> <?= $this->translate('Booking details'); ?></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#booking-guest"><i class="fas fa-user"></i> <?= $this->translate('Guests'); ?> <small class="text-muted">(<?= count($guests); ?>)</small></a>
+            <a class="nav-link" data-bs-toggle="tab" href="#booking-guest"><i class="fas fa-user"></i> <?= $this->translate('Guests'); ?> <small class="text-muted">(<?= count($guests); ?>)</small></a>
         </li>
     </ul>
     <?php endif; ?>
@@ -26,81 +24,81 @@ defined('KRYSTAL') or die;
     <div class="tab-content">
         <div class="tab-pane container active" id="booking-details">
     <?php endif; ?>
-            <form data-group="booking" autocomplete="off">
+            <form autocomplete="off">
                 <?= Element::hidden('booking[id]', $booking->getId()); ?>
                 <?= Element::hidden('booking[token]', $booking->getToken()); ?>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Room'); ?></label>
                     <div class="col-lg-10">
-                        <?= Element::select('booking[room_id]', $rooms, $booking->getRoomId(), ['class' => 'form-control']); ?>
+                        <?= Element::select('booking[room_id]', $rooms, $booking->getRoomId(), ['class' => 'form-select']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Client'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[client]', $booking->getClient(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Email'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[email]', $booking->getEmail(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Phone'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[phone]', $booking->getPhone(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Amount'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[amount]', $booking->getAmount(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Check-in'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[checkin]', $booking->getCheckin(), ['class' => 'form-control', 'data-plugin' => 'datepicker']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Check-out'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[checkout]', $booking->getCheckout(), ['class' => 'form-control', 'data-plugin' => 'datepicker']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Arrival time'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[arrival]', $booking->getArrival(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Postal code'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[index]', $booking->getIndex(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Address'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::text('booking[address]', $booking->getAddress(), ['class' => 'form-control']); ?>
                     </div>
                 </div>
 
-                <div class="form-group row mb-3">
+                <div class="row mb-3">
                     <label class="col-lg-2 col-form-label"><?= $this->translate('Comment'); ?></label>
                     <div class="col-lg-10">
                         <?= Element::textarea('booking[comment]', $booking->getComment(), ['class' => 'form-control', 'rows' => 4]); ?>

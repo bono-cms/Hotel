@@ -7,12 +7,12 @@ use Cms\View\Icon;
 ?>
 
 <div class="btn-toolbar">
-    <div class="btn-group mr-2">
-        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Room@addAction'); ?>"><i class="fas fa-hotel"></i> <?php $this->show('Add new room'); ?></a>
+    <div class="btn-group me-2">
+        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Room@addAction'); ?>"><i class="fas fa-hotel"></i> <?= $this->translate('Add new room'); ?></a>
     </div>
 
-    <div class="btn-group mr-2">
-        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Booking@indexAction'); ?>"><i class="fas fa-calendar-alt"></i> <?php $this->show('View all bookings'); ?> <small>(<?= $bookingCount; ?>)</small></a>
+    <div class="btn-group me-2">
+        <a class="btn btn-primary" href="<?= $this->url('Hotel:Admin:Booking@indexAction'); ?>"><i class="fas fa-calendar-alt"></i> <?= $this->translate('View all bookings'); ?> <small>(<?= $bookingCount; ?>)</small></a>
     </div>
 </div>
 
